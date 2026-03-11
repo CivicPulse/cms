@@ -12,7 +12,7 @@ This roadmap takes CivPulse's existing PayloadCMS v3 + Next.js 15 scaffold and t
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Multi-Tenant Foundation** - Migrate to PostgreSQL, wire multi-tenant plugin, enforce tenant isolation with smoke-tested proof
+- [x] **Phase 1: Multi-Tenant Foundation** - Migrate to PostgreSQL, wire multi-tenant plugin, enforce tenant isolation with smoke-tested proof
 - [ ] **Phase 2: Content Collections + Tenant Config** - Define all content types (posts, pages, media) with R2 storage, per-tenant site-settings, and REST API seeding
 - [ ] **Phase 3: Public Frontend + Integrations** - Subdomain-based tenant resolution, data-driven templates, webhook pipeline to run-api, and newsletter signup
 
@@ -30,9 +30,9 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 3 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Infrastructure: npm package swap (@payloadcms/db-postgres, plugin-multi-tenant, zod), src/env.ts Zod startup validation, Docker Compose Postgres dev container
-- [ ] 01-02-PLAN.md — Schema + plugin: Tenants collection, Users role field + tenantsArrayField, Posts tenant registration, payload.config.ts wired with Postgres adapter and multi-tenant plugin
-- [ ] 01-03-PLAN.md — Migration + smoke test: generate and commit initial migration, write tenant isolation smoke test, verify admin UI isolation
+- [x] 01-01-PLAN.md — Infrastructure: npm package swap (@payloadcms/db-postgres, plugin-multi-tenant, zod), src/env.ts Zod startup validation, Docker Compose Postgres dev container
+- [x] 01-02-PLAN.md — Schema + plugin: Tenants collection, Users role field + tenantsArrayField, Posts tenant registration, payload.config.ts wired with Postgres adapter and multi-tenant plugin
+- [x] 01-03-PLAN.md — Migration + smoke test: generate and commit initial migration, write tenant isolation smoke test, verify admin UI isolation
 
 ### Phase 2: Content Collections + Tenant Config
 **Goal**: Campaign managers can create blog posts (with email publishing fields), build static pages with block-based layouts, upload images to R2, and configure their site identity -- all scoped to their tenant
@@ -76,6 +76,6 @@ Phases execute in numeric order: 1 -> 2 -> 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Multi-Tenant Foundation | 2/3 | In Progress|  |
+| 1. Multi-Tenant Foundation | 3/3 | Complete | 2026-03-11 |
 | 2. Content Collections + Tenant Config | 0/3 | Not started | - |
 | 3. Public Frontend + Integrations | 0/3 | Not started | - |
