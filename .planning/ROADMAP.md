@@ -40,16 +40,16 @@ Plans:
 **Requirements**: CONT-01, CONT-02, CONT-03, CONT-04, CONF-01, CONF-02, CONF-03
 **Success Criteria** (what must be TRUE):
   1. A campaign manager can create a blog post with title, content, and publishAs selection; when publishAs includes "email", the email-specific fields (subject, preview text, status, scheduled send) become visible
-  2. Two tenants can each create a page with slug "about" without conflict -- per-tenant slug uniqueness is enforced via custom beforeValidate hook, while cross-tenant duplicate slugs are allowed
+  2. Two tenants can each create a page with slug "about" without conflict -- per-tenant slug uniqueness is enforced via custom validate function, while cross-tenant duplicate slugs are allowed
   3. A campaign manager can upload images through the admin panel and the files are stored in Cloudflare R2 (not local filesystem)
   4. Per-tenant site-settings (candidate name, office, tagline, primary color, logo, social links, contact email, donation URL, active template key) can be configured through admin UI and read via REST API
   5. run-api can seed a new tenant's site-settings via Payload REST API during campaign provisioning
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 02-01: TBD
-- [ ] 02-02: TBD
-- [ ] 02-03: TBD
+- [ ] 02-01-PLAN.md — Infrastructure + Posts: install storage-s3, extend env.ts with R2/webhook vars, enable API key auth on Users, create ensureUniqueTenantSlug hook, scaffold phase2-smoke.ts, extend Posts with slug + publishAs + email fields (CONT-01, CONT-02)
+- [ ] 02-02-PLAN.md — Pages + Media: create 4 block files (Hero, Text, Issues, Contact), Pages collection with block layout builder, Media upload collection (CONT-03, CONT-04)
+- [ ] 02-03-PLAN.md — SiteSettings + wiring + migration: SiteSettings collection under Configuration group, update payload.config.ts with all new collections + s3Storage plugin, email-status callback route, Phase 2 Drizzle migration, human-verify checkpoint (CONF-01, CONF-02, CONF-03)
 
 ### Phase 3: Public Frontend + Integrations
 **Goal**: Visitors see a fully rendered campaign website at the tenant's subdomain, with data-driven templates, blog content, and newsletter signup -- while post publishing triggers the email delivery pipeline via webhooks to run-api
