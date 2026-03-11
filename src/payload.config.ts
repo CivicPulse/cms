@@ -45,6 +45,11 @@ export default buildConfig({
       // REQUIRED: cleanupAfterTenantDelete: true triggers a Postgres transaction
       // abort bug (GitHub #14576, open as of November 2025). Always false for this project.
       cleanupAfterTenantDelete: false,
+      // tenantsArrayField is manually defined in src/collections/Users.ts at the top level.
+      // Setting includeDefaultField: false prevents the plugin from adding a duplicate.
+      tenantsArrayField: {
+        includeDefaultField: false,
+      },
       // Super-admins (role === 'super-admin') see the tenant selector in admin UI.
       // Campaign managers see no selector — they're scoped to their single tenant.
       userHasAccessToAllTenants: (user) =>
