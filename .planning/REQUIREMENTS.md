@@ -73,34 +73,34 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FOUND-01 | Phase 1 | Pending |
-| FOUND-02 | Phase 1 | Pending |
-| FOUND-03 | Phase 1 | Pending |
-| FOUND-04 | Phase 1 | Pending |
-| FOUND-05 | Phase 1 | Pending |
-| FOUND-06 | Phase 1 | Pending |
-| CONT-01 | Phase 2 | Pending |
-| CONT-02 | Phase 2 | Pending |
-| CONT-03 | Phase 2 | Pending |
-| CONT-04 | Phase 2 | Pending |
-| CONF-01 | Phase 2 | Pending |
-| CONF-02 | Phase 2 | Pending |
-| CONF-03 | Phase 2 | Pending |
-| HOOK-01 | Phase 3 | Pending |
-| HOOK-02 | Phase 3 | Pending |
-| HOOK-03 | Phase 3 | Pending |
-| FRONT-01 | Phase 3 | Pending |
-| FRONT-02 | Phase 3 | Pending |
-| FRONT-03 | Phase 3 | Pending |
-| FRONT-04 | Phase 3 | Pending |
-| FRONT-05 | Phase 3 | Pending |
-| FRONT-06 | Phase 3 | Pending |
+| FOUND-01 | Phase 1: Multi-Tenant Foundation | Pending |
+| FOUND-02 | Phase 1: Multi-Tenant Foundation | Pending |
+| FOUND-03 | Phase 1: Multi-Tenant Foundation | Pending |
+| FOUND-04 | Phase 1: Multi-Tenant Foundation | Pending |
+| FOUND-05 | Phase 1: Multi-Tenant Foundation | Pending |
+| FOUND-06 | Phase 1: Multi-Tenant Foundation | Pending |
+| CONT-01 | Phase 2: Content Collections + Tenant Config | Pending |
+| CONT-02 | Phase 2: Content Collections + Tenant Config | Pending |
+| CONT-03 | Phase 2: Content Collections + Tenant Config | Pending |
+| CONT-04 | Phase 2: Content Collections + Tenant Config | Pending |
+| CONF-01 | Phase 2: Content Collections + Tenant Config | Pending |
+| CONF-02 | Phase 2: Content Collections + Tenant Config | Pending |
+| CONF-03 | Phase 2: Content Collections + Tenant Config | Pending |
+| HOOK-01 | Phase 3: Public Frontend + Integrations | Pending |
+| HOOK-02 | Phase 3: Public Frontend + Integrations | Pending |
+| HOOK-03 | Phase 3: Public Frontend + Integrations | Pending |
+| FRONT-01 | Phase 3: Public Frontend + Integrations | Pending |
+| FRONT-02 | Phase 3: Public Frontend + Integrations | Pending |
+| FRONT-03 | Phase 3: Public Frontend + Integrations | Pending |
+| FRONT-04 | Phase 3: Public Frontend + Integrations | Pending |
+| FRONT-05 | Phase 3: Public Frontend + Integrations | Pending |
+| FRONT-06 | Phase 3: Public Frontend + Integrations | Pending |
 
 **Coverage:**
 - v1 requirements: 22 total
 - Mapped to phases: 22
-- Unmapped: 0 ✓
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-11*
-*Last updated: 2026-03-11 after initial definition*
+*Last updated: 2026-03-11 after roadmap creation (3-phase coarse structure)*

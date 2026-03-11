@@ -1,0 +1,80 @@
+# Roadmap: CivPulse Campaign CMS
+
+## Overview
+
+This roadmap takes CivPulse's existing PayloadCMS v3 + Next.js 15 scaffold and transforms it into a production multi-tenant campaign website platform. The work follows a strict dependency chain: PostgreSQL and multi-tenant isolation must be proven first (Phase 1), then content collections and tenant configuration built on that foundation (Phase 2), and finally the public-facing website, webhook integrations, and templates assembled on top (Phase 3). Each phase delivers a verifiable capability that unblocks the next.
+
+## Phases
+
+**Phase Numbering:**
+- Integer phases (1, 2, 3): Planned milestone work
+- Decimal phases (2.1, 2.2): Urgent insertions (marked with INSERTED)
+
+Decimal phases appear between their surrounding integers in numeric order.
+
+- [ ] **Phase 1: Multi-Tenant Foundation** - Migrate to PostgreSQL, wire multi-tenant plugin, enforce tenant isolation with smoke-tested proof
+- [ ] **Phase 2: Content Collections + Tenant Config** - Define all content types (posts, pages, media) with R2 storage, per-tenant site-settings, and REST API seeding
+- [ ] **Phase 3: Public Frontend + Integrations** - Subdomain-based tenant resolution, data-driven templates, webhook pipeline to run-api, and newsletter signup
+
+## Phase Details
+
+### Phase 1: Multi-Tenant Foundation
+**Goal**: A Payload instance running on PostgreSQL where multiple tenants are fully isolated -- campaign managers can only see and edit their own tenant's data in both admin UI and API
+**Depends on**: Nothing (first phase)
+**Requirements**: FOUND-01, FOUND-02, FOUND-03, FOUND-04, FOUND-05, FOUND-06
+**Success Criteria** (what must be TRUE):
+  1. App refuses to start with a clear error message when `DATABASE_URL` or `PAYLOAD_SECRET` environment variables are missing
+  2. Two test tenants can be created via the admin panel, each with distinct slug and domain values
+  3. A campaign manager user logged into Tenant A sees zero content from Tenant B in both admin UI and REST API responses
+  4. Multi-tenant plugin + PostgreSQL integration passes smoke test: create tenant, create content, query content, delete content -- no transaction crashes or unexpected errors
+**Plans**: TBD
+
+Plans:
+- [ ] 01-01: TBD
+- [ ] 01-02: TBD
+
+### Phase 2: Content Collections + Tenant Config
+**Goal**: Campaign managers can create blog posts (with email publishing fields), build static pages with block-based layouts, upload images to R2, and configure their site identity -- all scoped to their tenant
+**Depends on**: Phase 1
+**Requirements**: CONT-01, CONT-02, CONT-03, CONT-04, CONF-01, CONF-02, CONF-03
+**Success Criteria** (what must be TRUE):
+  1. A campaign manager can create a blog post with title, content, and publishAs selection; when publishAs includes "email", the email-specific fields (subject, preview text, status, scheduled send) become visible
+  2. Two tenants can each create a page with slug "about" without conflict -- per-tenant slug uniqueness is enforced via custom beforeValidate hook, while cross-tenant duplicate slugs are allowed
+  3. A campaign manager can upload images through the admin panel and the files are stored in Cloudflare R2 (not local filesystem)
+  4. Per-tenant site-settings (candidate name, office, tagline, primary color, logo, social links, contact email, donation URL, active template key) can be configured through admin UI and read via REST API
+  5. run-api can seed a new tenant's site-settings via Payload REST API during campaign provisioning
+**Plans**: TBD
+
+Plans:
+- [ ] 02-01: TBD
+- [ ] 02-02: TBD
+- [ ] 02-03: TBD
+
+### Phase 3: Public Frontend + Integrations
+**Goal**: Visitors see a fully rendered campaign website at the tenant's subdomain, with data-driven templates, blog content, and newsletter signup -- while post publishing triggers the email delivery pipeline via webhooks to run-api
+**Depends on**: Phase 2
+**Requirements**: HOOK-01, HOOK-02, HOOK-03, FRONT-01, FRONT-02, FRONT-03, FRONT-04, FRONT-05, FRONT-06
+**Success Criteria** (what must be TRUE):
+  1. Visiting `{slug}.campaigns.civpulse.com` resolves the correct tenant and renders that campaign's homepage with candidate name, photo, tagline, office, and issues -- all pulled from tenant site-settings
+  2. The public blog feed at `/{tenant}/blog` shows only published posts (publishAs "web" or "both") for the current tenant; individual post pages render full content with metadata
+  3. Publishing a post with publishAs "email" or "both" fires an HMAC-signed webhook to run-api containing postId, tenantId, and publishAs; run-api can call back to update emailStatus and emailSentAt without triggering an infinite webhook loop
+  4. A visitor can submit the newsletter signup form with name and email; the form POSTs to run-api's subscriber endpoint with the correct campaign ID and displays success/error feedback
+  5. Three visually distinct templates are available; a campaign can switch templates via site-settings without losing any content, and the selected template drives layout and color rendering
+
+**Plans**: TBD
+
+Plans:
+- [ ] 03-01: TBD
+- [ ] 03-02: TBD
+- [ ] 03-03: TBD
+
+## Progress
+
+**Execution Order:**
+Phases execute in numeric order: 1 -> 2 -> 3
+
+| Phase | Plans Complete | Status | Completed |
+|-------|----------------|--------|-----------|
+| 1. Multi-Tenant Foundation | 0/2 | Not started | - |
+| 2. Content Collections + Tenant Config | 0/3 | Not started | - |
+| 3. Public Frontend + Integrations | 0/3 | Not started | - |
