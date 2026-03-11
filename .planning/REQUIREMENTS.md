@@ -9,10 +9,10 @@
 
 - [x] **FOUND-01**: App fails to start with clear error if `PAYLOAD_SECRET` or `DATABASE_URL` are missing (no silent empty-string fallbacks)
 - [x] **FOUND-02**: Database migrated from `@payloadcms/db-sqlite` to `@payloadcms/db-postgres` with `push: false` and migration workflow established
-- [ ] **FOUND-03**: `@payloadcms/plugin-multi-tenant` wired to `tenants` collection; tenant isolation enforced at row level for all content collections
-- [ ] **FOUND-04**: `tenants` collection defined with `slug`, `displayName`, `domain`, `status` fields
-- [ ] **FOUND-05**: Campaign manager users restricted to their tenant's data in both admin UI and Local API queries (`overrideAccess: false` in all internal tenant-scoped queries)
-- [ ] **FOUND-06**: `cleanupAfterTenantDelete: false` set in plugin config (prevents Postgres transaction crash bug)
+- [x] **FOUND-03**: `@payloadcms/plugin-multi-tenant` wired to `tenants` collection; tenant isolation enforced at row level for all content collections
+- [x] **FOUND-04**: `tenants` collection defined with `slug`, `displayName`, `domain`, `status` fields
+- [x] **FOUND-05**: Campaign manager users restricted to their tenant's data in both admin UI and Local API queries (`overrideAccess: false` in all internal tenant-scoped queries)
+- [x] **FOUND-06**: `cleanupAfterTenantDelete: false` set in plugin config (prevents Postgres transaction crash bug)
 
 ### Content Collections
 
@@ -75,10 +75,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 |-------------|-------|--------|
 | FOUND-01 | Phase 1: Multi-Tenant Foundation | Complete |
 | FOUND-02 | Phase 1: Multi-Tenant Foundation | Complete |
-| FOUND-03 | Phase 1: Multi-Tenant Foundation | Pending |
-| FOUND-04 | Phase 1: Multi-Tenant Foundation | Pending |
-| FOUND-05 | Phase 1: Multi-Tenant Foundation | Pending |
-| FOUND-06 | Phase 1: Multi-Tenant Foundation | Pending |
+| FOUND-03 | Phase 1: Multi-Tenant Foundation | Complete |
+| FOUND-04 | Phase 1: Multi-Tenant Foundation | Complete |
+| FOUND-05 | Phase 1: Multi-Tenant Foundation | Complete |
+| FOUND-06 | Phase 1: Multi-Tenant Foundation | Complete |
 | CONT-01 | Phase 2: Content Collections + Tenant Config | Pending |
 | CONT-02 | Phase 2: Content Collections + Tenant Config | Pending |
 | CONT-03 | Phase 2: Content Collections + Tenant Config | Pending |

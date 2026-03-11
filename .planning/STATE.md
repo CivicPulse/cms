@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 01-multi-tenant-foundation-01-01-PLAN.md
-last_updated: "2026-03-11T14:03:00.428Z"
+stopped_at: Completed 01-multi-tenant-foundation-01-02-PLAN.md
+last_updated: "2026-03-11T14:07:18.555Z"
 last_activity: 2026-03-11 -- Roadmap created
 progress:
   total_phases: 3
   completed_phases: 0
   total_plans: 3
-  completed_plans: 1
+  completed_plans: 2
   percent: 0
 ---
 
@@ -51,6 +51,7 @@ Progress: [░░░░░░░░░░] 0%
 
 *Updated after each plan completion*
 | Phase 01-multi-tenant-foundation P01 | 3 | 3 tasks | 5 files |
+| Phase 01-multi-tenant-foundation P02 | 10 | 3 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -65,6 +66,9 @@ Recent decisions affecting current work:
 - [Research]: isGlobal: true may have validation bug (#10740) -- Phase 2 needs fallback pattern ready
 - [Phase 01-multi-tenant-foundation]: Pinned @payloadcms/db-postgres and plugin-multi-tenant to 3.79.0 to match payload core minor version
 - [Phase 01-multi-tenant-foundation]: Used zod v4 for env validation — z.object().parse() API compatible, payload does not pin zod as peer dep
+- [Phase 01-multi-tenant-foundation]: cleanupAfterTenantDelete: false required — Postgres transaction abort bug #14576
+- [Phase 01-multi-tenant-foundation]: Tenants.delete always returns false — archived status is soft-delete, avoids #14576 bug path
+- [Phase 01-multi-tenant-foundation]: push: process.env.NODE_ENV === 'development' — schema auto-push only in dev
 
 ### Pending Todos
 
@@ -77,6 +81,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-11T14:03:00.423Z
-Stopped at: Completed 01-multi-tenant-foundation-01-01-PLAN.md
+Last session: 2026-03-11T14:07:18.550Z
+Stopped at: Completed 01-multi-tenant-foundation-01-02-PLAN.md
 Resume file: None
