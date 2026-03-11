@@ -7,7 +7,7 @@ export const Users: CollectionConfig = {
   admin: {
     useAsTitle: 'email',
   },
-  auth: true,
+  auth: { useAPIKey: true },
   access: {
     // Campaign managers can only read their own user record
     read: ({ req }) => {
