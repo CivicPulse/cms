@@ -70,6 +70,9 @@ export interface Config {
     users: User;
     tenants: Tenant;
     posts: Post;
+    pages: Page;
+    media: Media;
+    'site-settings': SiteSetting;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -80,6 +83,9 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     tenants: TenantsSelect<false> | TenantsSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
+    media: MediaSelect<false> | MediaSelect<true>;
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -137,6 +143,9 @@ export interface User {
     | null;
   updatedAt: string;
   createdAt: string;
+  enableAPIKey?: boolean | null;
+  apiKey?: string | null;
+  apiKeyIndex?: string | null;
   email: string;
   resetPasswordToken?: string | null;
   resetPasswordExpiration?: string | null;
@@ -187,6 +196,10 @@ export interface Post {
   id: number;
   tenant?: (number | null) | Tenant;
   title: string;
+  /**
+   * Featured image shown in post cards and post header
+   */
+  featuredImage?: (number | null) | Media;
   content?: {
     root: {
       type: string;
@@ -202,6 +215,256 @@ export interface Post {
     };
     [k: string]: unknown;
   } | null;
+  publishAs: 'web' | 'email' | 'both';
+  slug: string;
+  emailSubject?: string | null;
+  /**
+   * Short preview shown in email clients before opening
+   */
+  emailPreviewText?: string | null;
+  /**
+   * Managed by run-api. Read-only for campaign managers.
+   */
+  emailStatus?: ('draft' | 'scheduled' | 'sent' | 'failed') | null;
+  /**
+   * Optional. Leave blank for immediate delivery when post is published.
+   */
+  scheduledSendAt?: string | null;
+  /**
+   * Set by run-api after successful email delivery.
+   */
+  emailSentAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * Images and media files for campaign websites
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  tenant?: (number | null) | Tenant;
+  /**
+   * Accessibility alt text for this image
+   */
+  alt?: string | null;
+  prefix?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
+}
+/**
+ * Static pages with block-based layout builder
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: number;
+  tenant?: (number | null) | Tenant;
+  title: string;
+  /**
+   * URL path for this page (e.g. "about", "contact"). Must be unique within this tenant.
+   */
+  slug: string;
+  /**
+   * Build the page layout by adding and arranging blocks
+   */
+  layout?:
+    | (
+        | {
+            /**
+             * Main heading displayed in the hero section
+             */
+            headline: string;
+            /**
+             * Supporting text below the headline
+             */
+            subheadline?: string | null;
+            /**
+             * Optional background image
+             */
+            backgroundImage?: (number | null) | Media;
+            /**
+             * Call-to-action button text (e.g. "Learn More")
+             */
+            ctaLabel?: string | null;
+            /**
+             * URL the CTA button links to
+             */
+            ctaUrl?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hero';
+          }
+        | {
+            /**
+             * Free-form rich text content section
+             */
+            content?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'text';
+          }
+        | {
+            /**
+             * Campaign issues or policy positions
+             */
+            items?:
+              | {
+                  /**
+                   * Issue or policy title
+                   */
+                  title: string;
+                  /**
+                   * Short plain-text description (no formatting)
+                   */
+                  description?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'issues';
+          }
+        | {
+            /**
+             * Contact email (defaults to site-settings contact email if left blank)
+             */
+            contactEmail?: string | null;
+            /**
+             * Campaign office address
+             */
+            officeAddress?: string | null;
+            /**
+             * Campaign office phone number
+             */
+            phoneNumber?: string | null;
+            /**
+             * Show newsletter signup form in this contact section
+             */
+            showNewsletterForm?: boolean | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'contact';
+          }
+      )[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Site-wide settings for this campaign. One record per tenant.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings".
+ */
+export interface SiteSetting {
+  id: number;
+  tenant?: (number | null) | Tenant;
+  /**
+   * Full name as it appears on the campaign website
+   */
+  candidateName: string;
+  /**
+   * e.g. "U.S. Senate -- Illinois" or "Mayor of Springfield"
+   */
+  officeRunningFor?: string | null;
+  /**
+   * Short campaign slogan shown on the homepage
+   */
+  tagline?: string | null;
+  /**
+   * Candidate biography paragraph
+   */
+  bio?: string | null;
+  /**
+   * Primary brand color as a hex value (e.g. #2563EB). Used for buttons, accents, and highlights.
+   */
+  primaryColor?: string | null;
+  /**
+   * Campaign logo image
+   */
+  logo?: (number | null) | Media;
+  /**
+   * Candidate headshot or featured photo
+   */
+  candidatePhoto?: (number | null) | Media;
+  /**
+   * Full Twitter/X profile URL
+   */
+  twitterUrl?: string | null;
+  /**
+   * Full Facebook page URL
+   */
+  facebookUrl?: string | null;
+  /**
+   * Full Instagram profile URL
+   */
+  instagramUrl?: string | null;
+  /**
+   * Public contact email displayed on the website
+   */
+  contactEmail?: string | null;
+  /**
+   * External donation page URL (e.g. ActBlue link)
+   */
+  donationUrl?: string | null;
+  /**
+   * Navigation menu items. External URLs (starting with http) open in a new tab.
+   */
+  navItems?:
+    | {
+        /**
+         * Link text (e.g. "About", "Donate")
+         */
+        label: string;
+        /**
+         * URL path (/about) or external URL (https://actblue.com/...)
+         */
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Choose the visual template for this campaign website. Switching templates does not affect content.
+   */
+  activeTemplateKey: 'classic' | 'modern' | 'bold';
   updatedAt: string;
   createdAt: string;
 }
@@ -240,6 +503,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'posts';
         value: number | Post;
+      } | null)
+    | ({
+        relationTo: 'pages';
+        value: number | Page;
+      } | null)
+    | ({
+        relationTo: 'media';
+        value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'site-settings';
+        value: number | SiteSetting;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -297,6 +572,9 @@ export interface UsersSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+  enableAPIKey?: T;
+  apiKey?: T;
+  apiKeyIndex?: T;
   email?: T;
   resetPasswordToken?: T;
   resetPasswordExpiration?: T;
@@ -331,7 +609,135 @@ export interface TenantsSelect<T extends boolean = true> {
 export interface PostsSelect<T extends boolean = true> {
   tenant?: T;
   title?: T;
+  featuredImage?: T;
   content?: T;
+  publishAs?: T;
+  slug?: T;
+  emailSubject?: T;
+  emailPreviewText?: T;
+  emailStatus?: T;
+  scheduledSendAt?: T;
+  emailSentAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  tenant?: T;
+  title?: T;
+  slug?: T;
+  layout?:
+    | T
+    | {
+        hero?:
+          | T
+          | {
+              headline?: T;
+              subheadline?: T;
+              backgroundImage?: T;
+              ctaLabel?: T;
+              ctaUrl?: T;
+              id?: T;
+              blockName?: T;
+            };
+        text?:
+          | T
+          | {
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        issues?:
+          | T
+          | {
+              items?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        contact?:
+          | T
+          | {
+              contactEmail?: T;
+              officeAddress?: T;
+              phoneNumber?: T;
+              showNewsletterForm?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media_select".
+ */
+export interface MediaSelect<T extends boolean = true> {
+  tenant?: T;
+  alt?: T;
+  prefix?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  tenant?: T;
+  candidateName?: T;
+  officeRunningFor?: T;
+  tagline?: T;
+  bio?: T;
+  primaryColor?: T;
+  logo?: T;
+  candidatePhoto?: T;
+  twitterUrl?: T;
+  facebookUrl?: T;
+  instagramUrl?: T;
+  contactEmail?: T;
+  donationUrl?: T;
+  navItems?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        id?: T;
+      };
+  activeTemplateKey?: T;
   updatedAt?: T;
   createdAt?: T;
 }

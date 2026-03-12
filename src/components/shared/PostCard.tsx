@@ -3,7 +3,7 @@ import Link from 'next/link'
 interface PostCardPost {
   title: string
   slug: string
-  featuredImage?: { url?: string | null; alt?: string | null } | null
+  featuredImage?: number | { url?: string | null; alt?: string | null } | null
   createdAt: string
   content?: {
     root: {

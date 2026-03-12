@@ -75,7 +75,8 @@ async function main() {
     if (result.docs.length > 0) return result.docs[0]
     return await payload.create({
       collection: collection as 'posts',
-      data: data as Parameters<typeof payload.create>[0]['data'],
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      data: data as any,
       overrideAccess: true,
     })
   }
@@ -171,13 +172,14 @@ async function main() {
     await payload.update({
       collection: 'posts',
       id: emailPost.id,
-      data: { emailStatus: 'sent' } as Parameters<typeof payload.update>[0]['data'],
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      data: { emailStatus: 'sent' } as any,
       overrideAccess: false,
       user: campaignManager,
     })
     // If update silently drops the field (due to access.update), check if it was actually changed
     const updated = await payload.findByID({ collection: 'posts', id: emailPost.id, overrideAccess: true })
-    if ((updated as Record<string, unknown>).emailStatus === 'sent') {
+    if ((updated as unknown as Record<string, unknown>).emailStatus === 'sent') {
       fail('Campaign manager should not be able to update emailStatus')
     } else {
       pass('Campaign manager cannot update emailStatus (field silently ignored by access control)')
@@ -196,12 +198,13 @@ async function main() {
     await payload.update({
       collection: 'posts',
       id: emailPost.id,
-      data: { emailStatus: 'scheduled' } as Parameters<typeof payload.update>[0]['data'],
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      data: { emailStatus: 'scheduled' } as any,
       overrideAccess: false,
       user: superAdmin,
     })
     const updated = await payload.findByID({ collection: 'posts', id: emailPost.id, overrideAccess: true })
-    if ((updated as Record<string, unknown>).emailStatus === 'scheduled') {
+    if ((updated as unknown as Record<string, unknown>).emailStatus === 'scheduled') {
       pass('Super-admin can update emailStatus')
     } else {
       fail('Super-admin emailStatus update did not persist')
@@ -272,7 +275,7 @@ async function main() {
 
   // Verify blocks were stored correctly
   const readPageA = await payload.findByID({ collection: 'pages', id: pageA.id, overrideAccess: true })
-  const layout = (readPageA as Record<string, unknown>).layout as Array<Record<string, unknown>>
+  const layout = (readPageA as unknown as Record<string, unknown>).layout as Array<Record<string, unknown>>
   if (Array.isArray(layout) && layout.length === 3) {
     pass('Page layout stored 3 blocks correctly')
   } else {
@@ -331,7 +334,7 @@ async function main() {
       overrideAccess: true,
     })
     if (existing.docs.length > 0) {
-      siteSettingsA = existing.docs[0] as Record<string, unknown>
+      siteSettingsA = existing.docs[0] as unknown as Record<string, unknown>
       pass('SiteSettings for tenant A already exists (idempotent)')
     } else {
       siteSettingsA = (await payload.create({
@@ -348,7 +351,7 @@ async function main() {
           tenant: tenantA.id,
         },
         overrideAccess: true,
-      })) as Record<string, unknown>
+      })) as unknown as Record<string, unknown>
       pass('SiteSettings created for tenant A')
     }
   } catch (err: unknown) {

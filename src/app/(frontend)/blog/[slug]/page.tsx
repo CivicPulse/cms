@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import type { Media } from '@/payload-types'
 import { getTenantBySlug, getSiteSettings, getPostBySlug } from '@/lib/tenant'
 import { getTemplate } from '@/lib/templates'
 import { RichText } from '@payloadcms/richtext-lexical/react'

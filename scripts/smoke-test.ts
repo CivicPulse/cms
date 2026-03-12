@@ -62,7 +62,7 @@ async function main() {
   }
 
   // ---- Setup: create a super-admin user ----
-  let superAdmin: { id: string | number; email: string }
+  let superAdmin: { id: number; email: string }
   try {
     superAdmin = await payload.create({
       collection: 'users',
@@ -80,13 +80,13 @@ async function main() {
       where: { email: { equals: 'superadmin@smoke-test.local' } },
       overrideAccess: true,
     })
-    superAdmin = existing.docs[0] as { id: string | number; email: string }
+    superAdmin = existing.docs[0] as { id: number; email: string }
   }
   assert(!!superAdmin?.id, 'Super-admin user created or found')
 
   // ---- FOUND-04: Create two tenants ----
-  let tenantA: { id: string | number }
-  let tenantB: { id: string | number }
+  let tenantA: { id: number }
+  let tenantB: { id: number }
 
   try {
     tenantA = await payload.create({
@@ -105,7 +105,7 @@ async function main() {
       where: { slug: { equals: 'tenant-a' } },
       overrideAccess: true,
     })
-    tenantA = existing.docs[0] as { id: string | number }
+    tenantA = existing.docs[0] as { id: number }
   }
 
   try {
@@ -125,17 +125,17 @@ async function main() {
       where: { slug: { equals: 'tenant-b' } },
       overrideAccess: true,
     })
-    tenantB = existing.docs[0] as { id: string | number }
+    tenantB = existing.docs[0] as { id: number }
   }
 
   assert(!!tenantA?.id, 'FOUND-04: Tenant A created with slug, domain, status fields')
   assert(!!tenantB?.id, 'FOUND-04: Tenant B created with slug, domain, status fields')
 
   // ---- Setup: create campaign manager users for each tenant ----
-  let userA: { id: string | number; email: string }
-  let userB: { id: string | number; email: string }
+  let userA: { id: number; email: string }
+  let userB: { id: number; email: string }
 
-  const createOrFindUser = async (email: string, tenantId: string | number) => {
+  const createOrFindUser = async (email: string, tenantId: number) => {
     try {
       return await payload.create({
         collection: 'users',
@@ -153,7 +153,7 @@ async function main() {
         where: { email: { equals: email } },
         overrideAccess: true,
       })
-      return existing.docs[0] as { id: string | number; email: string }
+      return existing.docs[0] as { id: number; email: string }
     }
   }
 
@@ -164,14 +164,17 @@ async function main() {
   assert(!!userB?.id, 'Campaign manager User B created for Tenant B')
 
   // ---- FOUND-03/04: Create posts under each tenant ----
-  let postA: { id: string | number }
-  let postB: { id: string | number }
+  let postA: { id: number }
+  let postB: { id: number }
 
   try {
     postA = await payload.create({
       collection: 'posts',
+      draft: false,
       data: {
         title: 'Tenant A Post',
+        slug: 'tenant-a-post',
+        publishAs: 'web',
         tenant: tenantA.id,
       },
       overrideAccess: true,
@@ -187,14 +190,17 @@ async function main() {
       },
       overrideAccess: true,
     })
-    postA = existing.docs[0] as { id: string | number }
+    postA = existing.docs[0] as { id: number }
   }
 
   try {
     postB = await payload.create({
       collection: 'posts',
+      draft: false,
       data: {
         title: 'Tenant B Post',
+        slug: 'tenant-b-post',
+        publishAs: 'web',
         tenant: tenantB.id,
       },
       overrideAccess: true,
@@ -210,7 +216,7 @@ async function main() {
       },
       overrideAccess: true,
     })
-    postB = existing.docs[0] as { id: string | number }
+    postB = existing.docs[0] as { id: number }
   }
 
   assert(!!postA?.id, 'Post created under Tenant A')
@@ -255,7 +261,8 @@ async function main() {
     process.exit(1)
   }
 
-  await payload.db.destroy()
+  await payload.db.destroy?.()
+
 }
 
 main().catch((err) => {

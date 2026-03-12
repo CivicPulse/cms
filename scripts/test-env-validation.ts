@@ -38,6 +38,7 @@ function assert(condition: boolean, label: string, detail?: string) {
  */
 function baseEnv(): NodeJS.ProcessEnv {
   return {
+    NODE_ENV: 'test',
     PAYLOAD_SECRET: 'a'.repeat(32),           // 32 chars — valid
     DATABASE_URL: 'postgresql://u:p@localhost/db',
     R2_ENDPOINT: 'abc123.r2.cloudflarestorage.com',
