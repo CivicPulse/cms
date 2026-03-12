@@ -66,7 +66,7 @@ Plans:
 
 Plans:
 - [ ] 03-00-PLAN.md — Wave 0: Playwright config + stub test files for all 9 requirement-mapped behavioral tests (ALL)
-- [ ] 03-01-PLAN.md — Schema + webhook pipeline: Posts versions/drafts + featuredImage, SiteSettings navItems, afterChange webhook hook, email-status skipWebhook context, new env vars (HOOK-01, HOOK-02, HOOK-03)
+- [x] 03-01-PLAN.md — Schema + webhook pipeline: Posts versions/drafts + featuredImage, SiteSettings navItems, afterChange webhook hook, email-status skipWebhook context, new env vars (HOOK-01, HOOK-02, HOOK-03)
 - [ ] 03-02-PLAN.md — Frontend infrastructure: Tailwind CSS v4 + PostCSS, subdomain middleware, frontend layout with fonts, lib utilities for tenant data + template selection + run-api (FRONT-01)
 - [ ] 03-03-PLAN.md — Shared components + block renderers: InitialsAvatar, PostCard, Pagination, ShareButtons, NewsletterForm, MobileNav, StickyActionBar, Footer, BlockRenderer + 4 block renderers (FRONT-06)
 - [ ] 03-04-PLAN.md — Template system: Classic + Modern + Bold template components (Layout, Nav, Hero for each), template registry wiring (FRONT-06, FRONT-02)
@@ -81,4 +81,4 @@ Phases execute in numeric order: 1 -> 2 -> 3
 |-------|----------------|--------|-----------|
 | 1. Multi-Tenant Foundation | 3/3 | Complete | 2026-03-11 |
 | 2. Content Collections + Tenant Config | 3/3 | Complete   | 2026-03-12 |
-| 3. Public Frontend + Integrations | 0/6 | Not started | - |
+| 3. Public Frontend + Integrations | 1/6 | In progress | - |

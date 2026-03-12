@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: completed
-stopped_at: Phase 3 context gathered
-last_updated: "2026-03-12T02:25:00.894Z"
-last_activity: 2026-03-12 -- Phase 2 Plan 3 complete
+status: in-progress
+stopped_at: Completed 03-02-PLAN.md
+last_updated: "2026-03-12T03:13:17Z"
+last_activity: 2026-03-12 -- Phase 3 Plan 2 complete
 progress:
   total_phases: 3
   completed_phases: 2
-  total_plans: 6
-  completed_plans: 6
-  percent: 100
+  total_plans: 12
+  completed_plans: 8
+  percent: 67
 ---
 
 # Project State
@@ -21,21 +21,21 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-11)
 
 **Core value:** A campaign manager with zero technical knowledge can launch a live campaign website and send their first newsletter email in under 10 minutes -- without any help from a developer.
-**Current focus:** Phase 2 (next)
+**Current focus:** Phase 3 (Public Frontend + Integrations)
 
 ## Current Position
 
-Phase: 2 of 3 (Content Collections + Tenant Config)
-Plan: 3 of 3 in Phase 2 -- COMPLETE
-Status: Phase 2 COMPLETE, all plans finished
-Last activity: 2026-03-12 -- Phase 2 Plan 3 complete
+Phase: 3 of 3 (Public Frontend + Integrations)
+Plan: 2 of 6 in Phase 3 -- COMPLETE
+Status: Phase 3 in progress
+Last activity: 2026-03-12 -- Phase 3 Plan 2 complete
 
-Progress: [██████████] 100%
+Progress: [██████░░░░] 67%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 6
+- Total plans completed: 8
 - Average duration: -
 - Total execution time: multi-session
 
@@ -45,9 +45,10 @@ Progress: [██████████] 100%
 |-------|-------|-------|----------|
 | 01-multi-tenant-foundation | 3 | 3 | - |
 | 02-content-collections-tenant-config | 3 | 3 | - |
+| 03-public-frontend-integrations | 2 | 6 | 3min |
 
 **Recent Trend:**
-- Last 5 plans: 01-02, 01-03, 02-01, 02-02, 02-03
+- Last 5 plans: 02-01, 02-02, 02-03, 03-01, 03-02
 - Trend: on track
 
 *Updated after each plan completion*
@@ -57,6 +58,8 @@ Progress: [██████████] 100%
 | Phase 02-content-collections-tenant-config P01 | 13min | 2 tasks | 8 files |
 | Phase 02-content-collections-tenant-config P02 | 3min | 2 tasks | 8 files |
 | Phase 02-content-collections-tenant-config P03 | multi-session | 3 tasks | 7 files |
+| Phase 03-public-frontend-integrations P01 | 3min | 2 tasks | 6 files |
+| Phase 03-public-frontend-integrations P02 | 4min | 2 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -85,6 +88,9 @@ Recent decisions affecting current work:
 - [Phase 02-content-collections-tenant-config P02]: Media has no disableLocalStorage or s3 config — storage-s3 plugin sets these automatically
 - [Phase 02-content-collections-tenant-config]: R2_ENDPOINT env var stores domain only (no https://) -- s3Storage config prepends protocol
 - [Phase 02-content-collections-tenant-config]: SiteSettings beforeOperation hook uses overrideAccess: true for duplicate detection -- avoids multi-tenant scoping
+- [Phase 03-public-frontend-integrations P01]: Use process.env.* directly in webhook hook (not env.ts import) -- hooks run in Payload context
+- [Phase 03-public-frontend-integrations P01]: Fire-and-forget webhook via fetch().catch() -- does not block CMS response
+- [Phase 03-public-frontend-integrations P01]: Guard on operation type: update requires draft->published transition; create requires direct publish
 
 ### Pending Todos
 
@@ -97,6 +103,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-12T02:25:00.889Z
-Stopped at: Phase 3 context gathered
-Resume file: .planning/phases/03-public-frontend-integrations/03-CONTEXT.md
+Last session: 2026-03-12T03:12:29Z
+Stopped at: Completed 03-01-PLAN.md
+Resume file: .planning/phases/03-public-frontend-integrations/03-01-SUMMARY.md

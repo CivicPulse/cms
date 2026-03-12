@@ -29,9 +29,9 @@
 
 ### Webhooks
 
-- [ ] **HOOK-01**: `posts` collection fires HMAC-signed webhook to run-api `POST /api/v1/webhooks/payload/post-published` when post transitions to `published` status with `publishAs` including email
-- [ ] **HOOK-02**: Webhook includes `postId`, `tenantId`, `publishAs`, and HMAC signature; uses `context` flag to prevent infinite loop on `emailStatus` update
-- [ ] **HOOK-03**: Payload REST endpoint to accept run-api callback updating `emailStatus` and `emailSentAt` on a post after send completes
+- [x] **HOOK-01**: `posts` collection fires HMAC-signed webhook to run-api `POST /api/v1/webhooks/payload/post-published` when post transitions to `published` status with `publishAs` including email
+- [x] **HOOK-02**: Webhook includes `postId`, `tenantId`, `publishAs`, and HMAC signature; uses `context` flag to prevent infinite loop on `emailStatus` update
+- [x] **HOOK-03**: Payload REST endpoint to accept run-api callback updating `emailStatus` and `emailSentAt` on a post after send completes
 
 ### Frontend
 
@@ -86,9 +86,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CONF-01 | Phase 2: Content Collections + Tenant Config | Complete |
 | CONF-02 | Phase 2: Content Collections + Tenant Config | Complete |
 | CONF-03 | Phase 2: Content Collections + Tenant Config | Complete |
-| HOOK-01 | Phase 3: Public Frontend + Integrations | Pending |
-| HOOK-02 | Phase 3: Public Frontend + Integrations | Pending |
-| HOOK-03 | Phase 3: Public Frontend + Integrations | Pending |
+| HOOK-01 | Phase 3: Public Frontend + Integrations | Complete |
+| HOOK-02 | Phase 3: Public Frontend + Integrations | Complete |
+| HOOK-03 | Phase 3: Public Frontend + Integrations | Complete |
 | FRONT-01 | Phase 3: Public Frontend + Integrations | Pending |
 | FRONT-02 | Phase 3: Public Frontend + Integrations | Pending |
 | FRONT-03 | Phase 3: Public Frontend + Integrations | Pending |
