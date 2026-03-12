@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: completed
-stopped_at: Phase 5 context gathered
-last_updated: "2026-03-12T19:34:48.555Z"
-last_activity: 2026-03-12 -- Phase 4 Plan 1 complete
+status: in-progress
+stopped_at: Completed 05-01-PLAN.md
+last_updated: "2026-03-12T20:08:32Z"
+last_activity: 2026-03-12 -- Phase 5 Plan 1 complete
 progress:
   total_phases: 5
   completed_phases: 4
-  total_plans: 14
-  completed_plans: 14
-  percent: 100
+  total_plans: 16
+  completed_plans: 15
+  percent: 94
 ---
 
 # Project State
@@ -21,21 +21,21 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-11)
 
 **Core value:** A campaign manager with zero technical knowledge can launch a live campaign website and send their first newsletter email in under 10 minutes -- without any help from a developer.
-**Current focus:** Phase 4 (Phase 3 Drizzle Migration) -- COMPLETE
+**Current focus:** Phase 5 (Tech Debt Cleanup) -- IN PROGRESS
 
 ## Current Position
 
-Phase: 4 of 4 (Phase 3 Drizzle Migration)
-Plan: 1 of 1 in Phase 4 -- COMPLETE
-Status: All phases complete
-Last activity: 2026-03-12 -- Phase 4 Plan 1 complete
+Phase: 5 of 5 (Tech Debt Cleanup)
+Plan: 1 of 2 in Phase 5 -- COMPLETE
+Status: Plan 05-01 complete, Plan 05-02 remaining
+Last activity: 2026-03-12 -- Phase 5 Plan 1 complete
 
-Progress: [██████████] 100%
+Progress: [█████████░] 94%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 14
+- Total plans completed: 15
 - Average duration: -
 - Total execution time: multi-session
 
@@ -47,9 +47,10 @@ Progress: [██████████] 100%
 | 02-content-collections-tenant-config | 3 | 3 | - |
 | 03-public-frontend-integrations | 6 | 6 | 3min |
 | 04-phase3-drizzle-migration | 1 | 1 | 29min |
+| 05-tech-debt-cleanup | 1 | 2 | 6min |
 
 **Recent Trend:**
-- Last 5 plans: 03-02, 03-03, 03-04, 03-06, 04-01
+- Last 5 plans: 03-04, 03-06, 04-01, 05-01
 - Trend: on track
 
 *Updated after each plan completion*
@@ -67,6 +68,7 @@ Progress: [██████████] 100%
 | Phase 03-public-frontend-integrations P04 | 4min | 2 tasks | 10 files |
 | Phase 03-public-frontend-integrations P06 | 2min | 1 tasks | 4 files |
 | Phase 04-phase3-drizzle-migration P01 | 29min | 2 tasks | 13 files |
+| Phase 05-tech-debt-cleanup P01 | 6min | 2 tasks | 16 files |
 
 ## Accumulated Context
 
@@ -114,6 +116,8 @@ Recent decisions affecting current work:
 - [Phase 03-public-frontend-integrations P06]: Thank-you page converted from client-only stub to server component with ThankYouForm client child -- matches newsletter/page.tsx pattern
 - [Phase 04-phase3-drizzle-migration P01]: Defensive _status backfill: UPDATE posts SET _status='published' WHERE NULL added to migration up() -- no-op on empty tables, protects pre-existing data
 - [Phase 04-phase3-drizzle-migration P01]: Type fixes committed alongside migration -- regenerated payload-types.ts exposed pre-existing mismatches in scripts and components
+- [Phase 05-tech-debt-cleanup P01]: Server actions as thin wrappers -- subscribeAction and updateSubscriberAction delegate entirely to api.ts helpers, no duplicated logic
+- [Phase 05-tech-debt-cleanup P01]: ContactBlockRenderer condition simplified from showNewsletterForm && campaignId && runApiUrl to showNewsletterForm && campaignId
 
 ### Pending Todos
 
@@ -126,6 +130,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-12T19:34:48.548Z
-Stopped at: Phase 5 context gathered
-Resume file: .planning/phases/05-tech-debt-cleanup/05-CONTEXT.md
+Last session: 2026-03-12T20:08:32Z
+Stopped at: Completed 05-01-PLAN.md
+Resume file: .planning/phases/05-tech-debt-cleanup/05-02-PLAN.md
