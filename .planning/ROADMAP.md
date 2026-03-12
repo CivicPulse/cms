@@ -13,7 +13,7 @@ This roadmap takes CivPulse's existing PayloadCMS v3 + Next.js 15 scaffold and t
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Multi-Tenant Foundation** - Migrate to PostgreSQL, wire multi-tenant plugin, enforce tenant isolation with smoke-tested proof
-- [ ] **Phase 2: Content Collections + Tenant Config** - Define all content types (posts, pages, media) with R2 storage, per-tenant site-settings, and REST API seeding
+- [x] **Phase 2: Content Collections + Tenant Config** - Define all content types (posts, pages, media) with R2 storage, per-tenant site-settings, and REST API seeding (completed 2026-03-12)
 - [ ] **Phase 3: Public Frontend + Integrations** - Subdomain-based tenant resolution, data-driven templates, webhook pipeline to run-api, and newsletter signup
 
 ## Phase Details
@@ -77,5 +77,5 @@ Phases execute in numeric order: 1 -> 2 -> 3
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Multi-Tenant Foundation | 3/3 | Complete | 2026-03-11 |
-| 2. Content Collections + Tenant Config | 0/3 | Not started | - |
+| 2. Content Collections + Tenant Config | 3/3 | Complete   | 2026-03-12 |
 | 3. Public Frontend + Integrations | 0/3 | Not started | - |

@@ -23,9 +23,9 @@
 
 ### Tenant Config
 
-- [ ] **CONF-01**: Per-tenant site-settings collection (using plugin `isGlobal: true` or one-per-tenant fallback): candidate name, office, tagline, primary color, logo/photo
-- [ ] **CONF-02**: Per-tenant site-settings includes: social links, contact email, donation URL, active template key
-- [ ] **CONF-03**: run-api can seed site-settings for a new tenant via Payload REST API during campaign provisioning
+- [x] **CONF-01**: Per-tenant site-settings collection (using plugin `isGlobal: true` or one-per-tenant fallback): candidate name, office, tagline, primary color, logo/photo
+- [x] **CONF-02**: Per-tenant site-settings includes: social links, contact email, donation URL, active template key
+- [x] **CONF-03**: run-api can seed site-settings for a new tenant via Payload REST API during campaign provisioning
 
 ### Webhooks
 
@@ -83,9 +83,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CONT-02 | Phase 2: Content Collections + Tenant Config | Complete |
 | CONT-03 | Phase 2: Content Collections + Tenant Config | Complete |
 | CONT-04 | Phase 2: Content Collections + Tenant Config | Complete |
-| CONF-01 | Phase 2: Content Collections + Tenant Config | Pending |
-| CONF-02 | Phase 2: Content Collections + Tenant Config | Pending |
-| CONF-03 | Phase 2: Content Collections + Tenant Config | Pending |
+| CONF-01 | Phase 2: Content Collections + Tenant Config | Complete |
+| CONF-02 | Phase 2: Content Collections + Tenant Config | Complete |
+| CONF-03 | Phase 2: Content Collections + Tenant Config | Complete |
 | HOOK-01 | Phase 3: Public Frontend + Integrations | Pending |
 | HOOK-02 | Phase 3: Public Frontend + Integrations | Pending |
 | HOOK-03 | Phase 3: Public Frontend + Integrations | Pending |
