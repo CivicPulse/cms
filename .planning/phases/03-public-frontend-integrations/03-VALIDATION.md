@@ -1,7 +1,7 @@
 ---
 phase: 3
 slug: public-frontend-integrations
-status: draft
+status: complete
 nyquist_compliant: true
 wave_0_complete: true
 created: 2026-03-12
@@ -38,17 +38,17 @@ created: 2026-03-12
 
 | Task ID | Plan | Wave | Requirement | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|-----------|-------------------|-------------|--------|
-| 3-00-01 | 00 | 0 | ALL | infra | `test -f playwright.config.ts && test -f tests/fixtures.ts` | Created by W0 | ⬜ pending |
-| 3-00-02 | 00 | 0 | ALL | infra | `ls tests/*.spec.ts \| wc -l \| grep -q 9` | Created by W0 | ⬜ pending |
-| 3-01-01 | 01 | 1 | HOOK-01 | integration | `npx playwright test tests/webhook.spec.ts -x` | ✅ W0 | ⬜ pending |
-| 3-01-02 | 01 | 1 | HOOK-02 | integration | `npx playwright test tests/webhook.spec.ts -x` | ✅ W0 | ⬜ pending |
-| 3-01-03 | 01 | 1 | HOOK-03 | integration | `npx playwright test tests/webhook.spec.ts -x` | ✅ (Phase 2 route) | ⬜ pending |
-| 3-02-01 | 02 | 1 | FRONT-01 | integration | `npx playwright test tests/middleware.spec.ts -x` | ✅ W0 | ⬜ pending |
-| 3-02-02 | 02 | 1 | FRONT-02 | e2e | `npx playwright test tests/homepage.spec.ts -x` | ✅ W0 | ⬜ pending |
-| 3-02-03 | 02 | 2 | FRONT-03 | e2e | `npx playwright test tests/blog.spec.ts -x` | ✅ W0 | ⬜ pending |
-| 3-02-04 | 02 | 2 | FRONT-04 | e2e | `npx playwright test tests/post.spec.ts -x` | ✅ W0 | ⬜ pending |
-| 3-03-01 | 03 | 2 | FRONT-05 | e2e | `npx playwright test tests/newsletter.spec.ts -x` | ✅ W0 | ⬜ pending |
-| 3-03-02 | 03 | 1 | FRONT-06 | e2e | `npx playwright test tests/templates.spec.ts -x` | ✅ W0 | ⬜ pending |
+| 3-00-01 | 00 | 0 | ALL | infra | `test -f playwright.config.ts && test -f tests/fixtures.ts` | Created by W0 | ✅ green |
+| 3-00-02 | 00 | 0 | ALL | infra | `ls tests/*.spec.ts \| wc -l \| grep -q 9` | Created by W0 | ✅ green |
+| 3-01-01 | 01 | 1 | HOOK-01 | integration | `npx playwright test tests/webhook.spec.ts -x` | ✅ W0 | ✅ green |
+| 3-01-02 | 01 | 1 | HOOK-02 | integration | `npx playwright test tests/webhook.spec.ts -x` | ✅ W0 | ✅ green |
+| 3-01-03 | 01 | 1 | HOOK-03 | integration | `npx playwright test tests/webhook.spec.ts -x` | ✅ (Phase 2 route) | ✅ green |
+| 3-02-01 | 02 | 1 | FRONT-01 | integration | `npx playwright test tests/middleware.spec.ts -x` | ✅ W0 | ✅ green |
+| 3-02-02 | 02 | 1 | FRONT-02 | e2e | `npx playwright test tests/homepage.spec.ts -x` | ✅ W0 | ✅ green |
+| 3-02-03 | 02 | 2 | FRONT-03 | e2e | `npx playwright test tests/blog.spec.ts -x` | ✅ W0 | ✅ green |
+| 3-02-04 | 02 | 2 | FRONT-04 | e2e | `npx playwright test tests/post.spec.ts -x` | ✅ W0 | ✅ green |
+| 3-03-01 | 03 | 2 | FRONT-05 | e2e | `npx playwright test tests/newsletter.spec.ts -x` | ✅ W0 | ✅ green |
+| 3-03-02 | 03 | 1 | FRONT-06 | e2e | `npx playwright test tests/templates.spec.ts -x` | ✅ W0 | ✅ green |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -85,3 +85,15 @@ Creates:
 - [x] `nyquist_compliant: true` set in frontmatter
 
 **Approval:** approved (Wave 0 plan 03-00 created)
+
+---
+
+## Validation Audit 2026-03-12
+
+| Metric | Count |
+|--------|-------|
+| Gaps found | 9 |
+| Resolved | 9 |
+| Escalated | 0 |
+
+All 9 `test.skip` stubs replaced with working Playwright tests covering HOOK-01/02/03 and FRONT-01/02/03/04/05/06.
