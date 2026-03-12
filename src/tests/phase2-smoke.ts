@@ -6,7 +6,8 @@
  * Requirements tested (Local API, no running server):
  *   CONT-01: Per-tenant slug uniqueness for posts
  *   CONT-02: emailStatus read-only for campaign managers
- *   CONT-03: Pages + blocks (stub until Plan 02)
+ *   CONT-03: Pages + blocks
+ *   CONT-04: Media / R2 upload (manual — requires running server + R2 creds)
  *   CONF-01: SiteSettings one-per-tenant (stub until Plan 03)
  *   CONF-02: REST API key auth (manual — stub note only)
  */
@@ -210,8 +211,112 @@ async function main() {
   }
 
   // -- CONT-03: Pages + blocks --
+  // ── CONT-03: Pages + blocks ────────────────────────────────────────────────
   console.log('\n[CONT-03] Pages + blocks')
-  skip('Pages collection not yet defined — will be tested after Plan 02')
+
+  // Cross-tenant duplicate slug is allowed for pages
+  const pageA = await findOrCreate(
+    'pages',
+    { and: [{ slug: { equals: 'about' } }, { tenant: { equals: tenantA.id } }] },
+    {
+      title: 'About Tenant A',
+      slug: 'about',
+      tenant: tenantA.id,
+      layout: [
+        {
+          blockType: 'hero',
+          headline: 'Welcome to Tenant A',
+          subheadline: 'Building a better future',
+          ctaLabel: 'Learn More',
+          ctaUrl: '/about',
+        },
+        {
+          blockType: 'issues',
+          items: [
+            { title: 'Education', description: 'Quality education for all' },
+            { title: 'Healthcare', description: 'Affordable healthcare' },
+          ],
+        },
+        {
+          blockType: 'contact',
+          contactEmail: 'contact@tenant-a.test',
+          officeAddress: '123 Main St, Springfield',
+          phoneNumber: '555-0100',
+          showNewsletterForm: true,
+        },
+      ],
+    },
+  )
+
+  const pageB = await findOrCreate(
+    'pages',
+    { and: [{ slug: { equals: 'about' } }, { tenant: { equals: tenantB.id } }] },
+    {
+      title: 'About Tenant B',
+      slug: 'about',
+      tenant: tenantB.id,
+      layout: [
+        {
+          blockType: 'text',
+          content: null, // Lexical content — null is valid for empty richText
+        },
+      ],
+    },
+  )
+
+  if (pageA && pageB && pageA.id !== pageB.id) {
+    pass('Cross-tenant duplicate slug "about" for pages is allowed')
+  } else {
+    fail('Cross-tenant duplicate page slug should be allowed')
+  }
+
+  // Verify blocks were stored correctly
+  const readPageA = await payload.findByID({ collection: 'pages', id: pageA.id, overrideAccess: true })
+  const layout = (readPageA as Record<string, unknown>).layout as Array<Record<string, unknown>>
+  if (Array.isArray(layout) && layout.length === 3) {
+    pass('Page layout stored 3 blocks correctly')
+  } else {
+    fail(`Expected 3 blocks in layout, got: ${JSON.stringify(layout?.length)}`)
+  }
+
+  if (layout?.[0]?.blockType === 'hero' && layout?.[0]?.headline === 'Welcome to Tenant A') {
+    pass('Hero block stored with correct headline')
+  } else {
+    fail(`Hero block data incorrect: ${JSON.stringify(layout?.[0])}`)
+  }
+
+  if (layout?.[1]?.blockType === 'issues') {
+    const items = (layout[1] as Record<string, unknown>).items as Array<unknown>
+    if (Array.isArray(items) && items.length === 2) {
+      pass('Issues block stored with 2 items')
+    } else {
+      fail(`Issues block items incorrect: ${JSON.stringify(items)}`)
+    }
+  } else {
+    fail('Issues block not found at layout[1]')
+  }
+
+  // Same-tenant duplicate page slug is rejected
+  try {
+    await payload.create({
+      collection: 'pages',
+      data: { title: 'Duplicate About', slug: 'about', tenant: tenantA.id },
+      overrideAccess: true,
+    })
+    fail('Same-tenant duplicate page slug should have been rejected')
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err)
+    const fullError = JSON.stringify(err)
+    if (msg.includes('already in use') || msg.includes('invalid') || fullError.includes('already in use')) {
+      pass('Same-tenant duplicate page slug "about" rejected with validation error')
+    } else {
+      fail(`Expected "already in use" error for page slug, got: ${msg}`)
+    }
+  }
+
+  // ── CONT-04: Media / R2 upload ─────────────────────────────────────────────
+  console.log('\n[CONT-04] Media / R2 upload')
+  skip('R2 upload requires running server + real R2 credentials — manual verification. See VALIDATION.md manual-only section.')
 
   // -- CONF-01: SiteSettings one-per-tenant --
   console.log('\n[CONF-01] SiteSettings one-per-tenant')
