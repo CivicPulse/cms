@@ -26,19 +26,6 @@ const templates: Record<TemplateKey, React.ComponentType<LayoutProps>> = {
   bold: BoldLayout,
 } as const
 
-const VALID_KEYS: ReadonlySet<string> = new Set<TemplateKey>(['classic', 'modern', 'bold'])
-
-/**
- * Validates and normalizes a template key string.
- * Falls back to 'modern' for unknown values.
- */
-export function getTemplateKey(key: string): TemplateKey {
-  if (VALID_KEYS.has(key)) {
-    return key as TemplateKey
-  }
-  return 'modern'
-}
-
 /**
  * Returns the Layout component for the given template key.
  * Falls back to ModernLayout for unknown keys.
