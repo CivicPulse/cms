@@ -320,11 +320,80 @@ async function main() {
 
   // -- CONF-01: SiteSettings one-per-tenant --
   console.log('\n[CONF-01] SiteSettings one-per-tenant')
-  skip('SiteSettings collection not yet defined — will be tested after Plan 03')
+
+  // Create SiteSettings for tenant A — should succeed
+  let siteSettingsA: Record<string, unknown>
+  try {
+    const existing = await payload.find({
+      collection: 'site-settings',
+      where: { tenant: { equals: tenantA.id } },
+      limit: 1,
+      overrideAccess: true,
+    })
+    if (existing.docs.length > 0) {
+      siteSettingsA = existing.docs[0] as Record<string, unknown>
+      pass('SiteSettings for tenant A already exists (idempotent)')
+    } else {
+      siteSettingsA = (await payload.create({
+        collection: 'site-settings',
+        data: {
+          candidateName: 'Jane Doe',
+          officeRunningFor: 'Mayor of Springfield',
+          tagline: 'A Fresh Start',
+          primaryColor: '#2563EB',
+          twitterUrl: 'https://twitter.com/janedoe',
+          contactEmail: 'jane@tenanta.test',
+          donationUrl: 'https://donate.example.com',
+          activeTemplateKey: 'classic',
+          tenant: tenantA.id,
+        },
+        overrideAccess: true,
+      })) as Record<string, unknown>
+      pass('SiteSettings created for tenant A')
+    }
+  } catch (err: unknown) {
+    fail(`SiteSettings create failed: ${err instanceof Error ? err.message : String(err)}`)
+    siteSettingsA = {}
+  }
+
+  // Verify all fields are stored
+  if (siteSettingsA.candidateName === 'Jane Doe' && siteSettingsA.activeTemplateKey === 'classic') {
+    pass('SiteSettings fields (candidateName, activeTemplateKey) stored correctly')
+  } else {
+    fail(`SiteSettings field values incorrect: ${JSON.stringify(siteSettingsA)}`)
+  }
+
+  // Create second SiteSettings for tenant A — must fail
+  try {
+    await payload.create({
+      collection: 'site-settings',
+      data: {
+        candidateName: 'Duplicate',
+        activeTemplateKey: 'modern',
+        tenant: tenantA.id,
+      },
+      overrideAccess: true,
+    })
+    fail('Creating duplicate SiteSettings for same tenant should have thrown')
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err)
+    if (msg.includes('already exist')) {
+      pass('Duplicate SiteSettings create rejected with correct error message')
+    } else {
+      fail(`Expected "already exist" error, got: ${msg}`)
+    }
+  }
 
   // -- CONF-02: REST API key auth --
   console.log('\n[CONF-02] REST API key auth')
-  skip('REST API key auth requires running server — manual verification in Plan 03')
+  skip(`REST API key auth requires running server + API key generated in admin UI.
+  Manual test:
+    1. Start dev server: npm run dev
+    2. Go to /admin -> Users -> create super-admin user or edit existing
+    3. Generate API key from user record
+    4. curl http://localhost:3000/api/site-settings \\
+         -H "Authorization: users API-Key {key}"
+    5. Expect 200 with SiteSettings documents for all tenants (super-admin sees all)`)
 
   // -- Results --
   console.log(`\n${'─'.repeat(50)}`)
