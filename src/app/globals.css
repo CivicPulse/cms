@@ -33,4 +33,15 @@
   --font-sans: var(--font-inter);
   --font-serif: var(--font-merriweather);
   --font-display: var(--font-space-grotesk);
+
+  --animate-slide-in-right: slide-in-right 0.2s ease-out;
+}
+
+@keyframes slide-in-right {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
