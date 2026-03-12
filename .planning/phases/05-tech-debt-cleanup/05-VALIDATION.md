@@ -1,10 +1,11 @@
 ---
 phase: 5
 slug: tech-debt-cleanup
-status: draft
-nyquist_compliant: false
-wave_0_complete: false
+status: complete
+nyquist_compliant: true
+wave_0_complete: true
 created: 2026-03-12
+audited: 2026-03-12
 ---
 
 # Phase 5 — Validation Strategy
@@ -38,13 +39,11 @@ created: 2026-03-12
 
 | Task ID | Plan | Wave | Requirement | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|-----------|-------------------|-------------|--------|
-| 05-01-01 | 01 | 1 | N/A-01 | compile | `npx tsc --noEmit` | N/A | ⬜ pending |
-| 05-01-02 | 01 | 1 | N/A-01 | compile | `npx tsc --noEmit` | N/A | ⬜ pending |
-| 05-02-01 | 02 | 1 | N/A-02 | compile | `npx tsc --noEmit` | N/A | ⬜ pending |
-| 05-02-02 | 02 | 1 | N/A-03 | compile | `npx tsc --noEmit` | N/A | ⬜ pending |
-| 05-03-01 | 03 | 1 | N/A-04 | manual | Code review + grep | N/A | ⬜ pending |
-| 05-03-02 | 03 | 1 | N/A-05 | compile | `npx tsc --noEmit` | N/A | ⬜ pending |
-| 05-XX-XX | XX | 2 | N/A-06 | build | `npm run build` | N/A | ⬜ pending |
+| 05-01-01 | 01 | 1 | Server actions + form rewire | compile | `npx tsc --noEmit` | N/A | ✅ green |
+| 05-01-02 | 01 | 1 | runApiUrl elimination (15 files) | compile+grep | `npx tsc --noEmit && grep -r "runApiUrl" src/ \| wc -l` | N/A | ✅ green |
+| 05-02-01 | 02 | 1 | navItems cast removal (8 templates) | compile+grep | `npx tsc --noEmit && grep -r "as unknown as Record" src/components/templates/ \| wc -l` | N/A | ✅ green |
+| 05-02-02 | 02 | 1 | featuredImage + WEBHOOK_SECRET + smoke tests | compile+grep | `npx tsc --noEmit && grep -c "WEBHOOK_SECRET!" src/hooks/fireWebhook.ts && grep -c "as { id:" scripts/smoke-test.ts` | N/A | ✅ green |
+| 05-02-03 | 02 | 2 | Final build gate | build+grep | `npm run build && grep -r "as unknown as Record" src/ \| wc -l` | N/A | ✅ green |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -62,17 +61,31 @@ TypeScript compilation (`npx tsc --noEmit`) and build (`npm run build`) are the 
 
 | Behavior | Requirement | Why Manual | Test Instructions |
 |----------|-------------|------------|-------------------|
-| WEBHOOK_SECRET runtime guard exists | N/A-04 | Behavioral pattern, not type-checkable | `grep -n 'WEBHOOK_SECRET!' src/hooks/fireWebhook.ts` should return 0 matches; `grep -n 'WEBHOOK_SECRET' src/hooks/fireWebhook.ts` should show guard pattern |
+| WEBHOOK_SECRET runtime guard exists | N/A-04 | Behavioral pattern, not type-checkable | `grep -c "if (!webhookSecret)" src/hooks/fireWebhook.ts` should return 1; `grep -c "WEBHOOK_SECRET!" src/hooks/fireWebhook.ts` should return 0 |
+
+*Note: Manual verification confirmed during audit — guard present at lines 25-31 of fireWebhook.ts.*
 
 ---
 
 ## Validation Sign-Off
 
-- [ ] All tasks have `<automated>` verify or Wave 0 dependencies
-- [ ] Sampling continuity: no 3 consecutive tasks without automated verify
-- [ ] Wave 0 covers all MISSING references
-- [ ] No watch-mode flags
-- [ ] Feedback latency < 30s
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] All tasks have `<automated>` verify or Wave 0 dependencies
+- [x] Sampling continuity: no 3 consecutive tasks without automated verify
+- [x] Wave 0 covers all MISSING references
+- [x] No watch-mode flags
+- [x] Feedback latency < 30s
+- [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** complete
+
+---
+
+## Validation Audit 2026-03-12
+
+| Metric | Count |
+|--------|-------|
+| Gaps found | 0 |
+| Resolved | 0 |
+| Escalated | 0 |
+
+All 5 tasks verified green via compile + grep checks. `npx tsc --noEmit` passes clean, `npm run build` succeeds, and all grep assertions confirm zero stale patterns remain.
