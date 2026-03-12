@@ -67,37 +67,42 @@ export async function seedPost(
   tenantId: string | number,
   overrides: Record<string, unknown> = {},
 ) {
+  const postData = {
+    // tenant field is injected by the multi-tenant plugin at runtime
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    tenant: tenantId as any,
+    title: 'Test Post',
+    slug: 'test-post',
+    content: {
+      root: {
+        type: 'root',
+        children: [
+          {
+            type: 'paragraph',
+            children: [{ type: 'text', text: 'This is a test post.' }],
+            version: 1,
+          },
+        ],
+        direction: 'ltr',
+        format: '',
+        indent: 0,
+        version: 1,
+      },
+    },
+    publishAs: 'web',
+    ...overrides,
+  }
+
+  // Create directly as published by including _status: 'published' in data
+  // With Payload v3 drafts, setting _status in data during create publishes directly.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const post = await payload.create({
     collection: 'posts',
-    // draft: false tells Payload to set _status: 'published'
-    draft: false,
-    data: {
-      // tenant field is injected by the multi-tenant plugin at runtime
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      tenant: tenantId as any,
-      title: 'Test Post',
-      slug: 'test-post',
-      content: {
-        root: {
-          type: 'root',
-          children: [
-            {
-              type: 'paragraph',
-              children: [{ type: 'text', text: 'This is a test post.' }],
-              version: 1,
-            },
-          ],
-          direction: 'ltr',
-          format: '',
-          indent: 0,
-          version: 1,
-        },
-      },
-      publishAs: 'web',
-      ...overrides,
-    },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    data: { ...postData, _status: 'published' } as any,
     overrideAccess: true,
   })
+
   return post
 }
 
