@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Phase 6 context gathered
-last_updated: "2026-03-12T21:25:05.531Z"
-last_activity: 2026-03-12 -- Phase 5 Plan 2 complete
+stopped_at: Completed 06-01-PLAN.md
+last_updated: "2026-03-12T21:44:51.070Z"
+last_activity: 2026-03-12 -- Phase 6 Plan 1 complete
 progress:
   total_phases: 6
-  completed_phases: 5
-  total_plans: 16
-  completed_plans: 16
+  completed_phases: 6
+  total_plans: 17
+  completed_plans: 17
   percent: 100
 ---
 
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-11)
 
 **Core value:** A campaign manager with zero technical knowledge can launch a live campaign website and send their first newsletter email in under 10 minutes -- without any help from a developer.
-**Current focus:** Phase 5 (Tech Debt Cleanup) -- COMPLETE
+**Current focus:** Phase 6 (Audit Tech Debt Sweep) -- COMPLETE
 
 ## Current Position
 
-Phase: 5 of 5 (Tech Debt Cleanup)
-Plan: 2 of 2 in Phase 5 -- COMPLETE
+Phase: 6 of 6 (Audit Tech Debt Sweep)
+Plan: 1 of 1 in Phase 6 -- COMPLETE
 Status: All plans complete. Milestone v1.0 finished.
-Last activity: 2026-03-12 -- Phase 5 Plan 2 complete
+Last activity: 2026-03-12 -- Phase 6 Plan 1 complete
 
 Progress: [██████████] 100%
 
@@ -70,6 +70,7 @@ Progress: [██████████] 100%
 | Phase 04-phase3-drizzle-migration P01 | 29min | 2 tasks | 13 files |
 | Phase 05-tech-debt-cleanup P01 | 6min | 2 tasks | 16 files |
 | Phase 05-tech-debt-cleanup P02 | 7min | 3 tasks | 12 files |
+| Phase 06 P01 | 6min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -121,6 +122,8 @@ Recent decisions affecting current work:
 - [Phase 05-tech-debt-cleanup P01]: ContactBlockRenderer condition simplified from showNewsletterForm && campaignId && runApiUrl to showNewsletterForm && campaignId
 - [Phase 05-tech-debt-cleanup P02]: Partial<SiteSetting> used for phase2-smoke.ts variable annotation to handle {} fallback
 - [Phase 05-tech-debt-cleanup P02]: scripts/smoke-test.ts keeps inline type annotations (compatible with Payload generics) rather than importing types
+- [Phase 06]: Module-level baseUrl in api.ts -- env.ts Zod validation guarantees value at startup, removing need for per-function guards
+- [Phase 06]: Blog page uses env.SITE_DOMAIN without ternary fallback -- Zod .min(1) ensures non-empty
 
 ### Pending Todos
 
@@ -133,6 +136,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-12T21:25:05.525Z
-Stopped at: Phase 6 context gathered
-Resume file: .planning/phases/06-audit-tech-debt-sweep/06-CONTEXT.md
+Last session: 2026-03-12T21:44:51.064Z
+Stopped at: Completed 06-01-PLAN.md
+Resume file: None
