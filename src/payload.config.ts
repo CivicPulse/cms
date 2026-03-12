@@ -8,6 +8,7 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 
+import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import { Tenants } from './collections/Tenants'
 import { Users } from './collections/Users'
@@ -19,7 +20,7 @@ export default buildConfig({
   admin: {
     user: Users.slug,
   },
-  collections: [Users, Tenants, Posts],
+  collections: [Users, Tenants, Posts, Pages],
   editor: lexicalEditor(),
   secret: env.PAYLOAD_SECRET,
   typescript: {
@@ -38,8 +39,9 @@ export default buildConfig({
     multiTenantPlugin({
       collections: {
         // Posts is registered here to prove tenant isolation in Phase 1.
-        // Additional content collections (pages, media) are added in Phase 2.
+        // Pages added in Phase 2 Plan 02 for tenant-scoped page management.
         posts: {},
+        pages: {},
       },
       tenantsSlug: 'tenants',
       // REQUIRED: cleanupAfterTenantDelete: true triggers a Postgres transaction
