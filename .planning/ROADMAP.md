@@ -14,7 +14,9 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Multi-Tenant Foundation** - Migrate to PostgreSQL, wire multi-tenant plugin, enforce tenant isolation with smoke-tested proof
 - [x] **Phase 2: Content Collections + Tenant Config** - Define all content types (posts, pages, media) with R2 storage, per-tenant site-settings, and REST API seeding (completed 2026-03-12)
-- [ ] **Phase 3: Public Frontend + Integrations** - Subdomain-based tenant resolution, data-driven templates, webhook pipeline to run-api, and newsletter signup
+- [x] **Phase 3: Public Frontend + Integrations** - Subdomain-based tenant resolution, data-driven templates, webhook pipeline to run-api, and newsletter signup (completed 2026-03-12)
+- [ ] **Phase 4: Phase 3 Drizzle Migration** - Generate and commit missing migration for Phase 3 schema changes (gap closure)
+- [ ] **Phase 5: Tech Debt Cleanup** - Resolve stale type casts, orphaned exports, missing runtime guards, and TS errors from audit
 
 ## Phase Details
 
@@ -65,21 +67,49 @@ Plans:
 **Plans**: 7 plans
 
 Plans:
-- [ ] 03-00-PLAN.md — Wave 0: Playwright config + stub test files for all 9 requirement-mapped behavioral tests (ALL)
+- [x] 03-00-PLAN.md — Wave 0: Playwright config + stub test files for all 9 requirement-mapped behavioral tests (ALL)
 - [x] 03-01-PLAN.md — Schema + webhook pipeline: Posts versions/drafts + featuredImage, SiteSettings navItems, afterChange webhook hook, email-status skipWebhook context, new env vars (HOOK-01, HOOK-02, HOOK-03)
 - [x] 03-02-PLAN.md — Frontend infrastructure: Tailwind CSS v4 + PostCSS, subdomain middleware, frontend layout with fonts, lib utilities for tenant data + template selection + run-api (FRONT-01)
-- [ ] 03-03-PLAN.md — Shared components + block renderers: InitialsAvatar, PostCard, Pagination, ShareButtons, NewsletterForm, MobileNav, StickyActionBar, Footer, BlockRenderer + 4 block renderers (FRONT-06)
-- [ ] 03-04-PLAN.md — Template system: Classic + Modern + Bold template components (Layout, Nav, Hero for each), template registry wiring (FRONT-06, FRONT-02)
-- [ ] 03-05-PLAN.md — Page routes: homepage with fixed sections, dynamic pages, blog feed with pagination, post pages with rich text, newsletter signup flow, not-found page, visual verification checkpoint (FRONT-02, FRONT-03, FRONT-04, FRONT-05)
-- [ ] 03-06-PLAN.md — Gap closure: Wire thank-you page update handler to call run-api PATCH endpoint, pass email from NewsletterForm to thank-you page via URL params (FRONT-05)
+- [x] 03-03-PLAN.md — Shared components + block renderers: InitialsAvatar, PostCard, Pagination, ShareButtons, NewsletterForm, MobileNav, StickyActionBar, Footer, BlockRenderer + 4 block renderers (FRONT-06)
+- [x] 03-04-PLAN.md — Template system: Classic + Modern + Bold template components (Layout, Nav, Hero for each), template registry wiring (FRONT-06, FRONT-02)
+- [x] 03-05-PLAN.md — Page routes: homepage with fixed sections, dynamic pages, blog feed with pagination, post pages with rich text, newsletter signup flow, not-found page, visual verification checkpoint (FRONT-02, FRONT-03, FRONT-04, FRONT-05)
+- [x] 03-06-PLAN.md — Gap closure: Wire thank-you page update handler to call run-api PATCH endpoint, pass email from NewsletterForm to thank-you page via URL params (FRONT-05)
+
+### Phase 4: Phase 3 Drizzle Migration
+**Goal**: Generate and commit the missing Drizzle migration for Phase 3 schema changes so production deployment (push:false) applies all columns and tables correctly
+**Depends on**: Phase 3
+**Requirements**: FOUND-02 (gap closure)
+**Gap Closure:** Closes INT-01 (missing migration), production deployment flow
+**Success Criteria** (what must be TRUE):
+  1. A migration file exists in `src/migrations/` covering Phase 3 schema changes (versions/drafts, featuredImage, navItems)
+  2. `npx payload migrate` applies the migration cleanly against the existing schema
+  3. Production deployment flow (push:false) no longer crashes on missing columns
+
+Plans: TBD
+
+### Phase 5: Tech Debt Cleanup
+**Goal**: Resolve accumulated tech debt identified in the v1.0 milestone audit — remove stale type casts, consolidate duplicated API helpers, add missing runtime guards, and fix TypeScript errors
+**Depends on**: Phase 4
+**Requirements**: None (quality improvement)
+**Gap Closure:** Addresses 5 tech debt items from v1.0 audit
+**Success Criteria** (what must be TRUE):
+  1. `subscribeToNewsletter` and `updateSubscriber` from `src/lib/api.ts` are used by NewsletterForm and ThankYouForm (or removed if truly unused)
+  2. All `as unknown as Record` type casts for `navItems` and `featuredImage` are replaced with proper typed access from `payload-types.ts`
+  3. `fireWebhook.ts` has a runtime guard for `WEBHOOK_SECRET` matching the pattern in email-status route
+  4. TypeScript errors in `scripts/smoke-test.ts` and `src/tests/phase2-smoke.ts` are resolved
+  5. `npm run build` completes with zero type errors
+
+Plans: TBD
 
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 -> 2 -> 3
+Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Multi-Tenant Foundation | 3/3 | Complete | 2026-03-11 |
-| 2. Content Collections + Tenant Config | 3/3 | Complete   | 2026-03-12 |
-| 3. Public Frontend + Integrations | 2/7 | In progress | - |
+| 2. Content Collections + Tenant Config | 3/3 | Complete | 2026-03-12 |
+| 3. Public Frontend + Integrations | 7/7 | Complete | 2026-03-12 |
+| 4. Phase 3 Drizzle Migration | 0/0 | Pending | - |
+| 5. Tech Debt Cleanup | 0/0 | Pending | - |
