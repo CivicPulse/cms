@@ -97,6 +97,7 @@ export async function POST(
       id,
       data: updateData,
       overrideAccess: true, // system update -- HMAC validates caller identity
+      context: { skipWebhook: true }, // prevent afterChange hook from re-triggering webhook
     })
 
     return NextResponse.json({ ok: true })
