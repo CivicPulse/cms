@@ -106,6 +106,32 @@ export const SiteSettings: CollectionConfig = {
       type: 'text',
       admin: { description: 'External donation page URL (e.g. ActBlue link)' },
     },
+    // -- Navigation ---------------------------------------------------------------
+    {
+      name: 'navItems',
+      type: 'array',
+      admin: {
+        description:
+          'Navigation menu items. External URLs (starting with http) open in a new tab.',
+      },
+      fields: [
+        {
+          name: 'label',
+          type: 'text',
+          required: true,
+          admin: { description: 'Link text (e.g. "About", "Donate")' },
+        },
+        {
+          name: 'url',
+          type: 'text',
+          required: true,
+          admin: {
+            description:
+              'URL path (/about) or external URL (https://actblue.com/...)',
+          },
+        },
+      ],
+    },
     // -- Template + Display -------------------------------------------------------
     {
       name: 'activeTemplateKey',

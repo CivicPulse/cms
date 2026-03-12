@@ -28,5 +28,17 @@ export const env = z
     WEBHOOK_SECRET: z
       .string()
       .min(32, 'WEBHOOK_SECRET must be at least 32 characters — used for HMAC signing with run-api'),
+    // Webhook target URL for post-published events (e.g. https://api.civpulse.com/api/v1/webhooks/payload/post-published)
+    RUN_API_WEBHOOK_URL: z
+      .string()
+      .min(1, 'RUN_API_WEBHOOK_URL is required — target URL for post-published webhook'),
+    // Base URL for run-api (e.g. https://api.civpulse.com)
+    RUN_API_BASE_URL: z
+      .string()
+      .url('RUN_API_BASE_URL must be a valid URL — e.g. https://api.civpulse.com'),
+    // Base domain for subdomain extraction (e.g. campaigns.civpulse.com)
+    SITE_DOMAIN: z
+      .string()
+      .min(1, 'SITE_DOMAIN is required — base domain for subdomain extraction'),
   })
   .parse(process.env)
