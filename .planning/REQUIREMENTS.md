@@ -36,11 +36,11 @@
 ### Frontend
 
 - [x] **FRONT-01**: Next.js middleware resolves tenant from request subdomain and injects tenant context into all Server Components
-- [ ] **FRONT-02**: Public homepage renders candidate name, photo, tagline, office, and issues — all data-driven from tenant site-settings
-- [ ] **FRONT-03**: Public blog feed renders published posts (web or both) for the current tenant
-- [ ] **FRONT-04**: Individual post page renders post content with structured metadata
-- [ ] **FRONT-05**: Newsletter signup form POSTs name + email to `POST /api/v1/campaigns/{campaign_id}/subscribers` on run-api; handles success/error states
-- [ ] **FRONT-06**: 3 distinct frontend templates (different layout + color personality); all data-driven from tenant site-settings; campaigns can switch templates without content loss
+- [x] **FRONT-02**: Public homepage renders candidate name, photo, tagline, office, and issues — all data-driven from tenant site-settings
+- [x] **FRONT-03**: Public blog feed renders published posts (web or both) for the current tenant
+- [x] **FRONT-04**: Individual post page renders post content with structured metadata
+- [x] **FRONT-05**: Newsletter signup form POSTs name + email to `POST /api/v1/campaigns/{campaign_id}/subscribers` on run-api; handles success/error states
+- [x] **FRONT-06**: 3 distinct frontend templates (different layout + color personality); all data-driven from tenant site-settings; campaigns can switch templates without content loss
 
 ## v2 Requirements
 
@@ -90,11 +90,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | HOOK-02 | Phase 3: Public Frontend + Integrations | Complete |
 | HOOK-03 | Phase 3: Public Frontend + Integrations | Complete |
 | FRONT-01 | Phase 3: Public Frontend + Integrations | Complete |
-| FRONT-02 | Phase 3: Public Frontend + Integrations | Pending |
-| FRONT-03 | Phase 3: Public Frontend + Integrations | Pending |
-| FRONT-04 | Phase 3: Public Frontend + Integrations | Pending |
-| FRONT-05 | Phase 3: Public Frontend + Integrations | Pending |
-| FRONT-06 | Phase 3: Public Frontend + Integrations | Pending |
+| FRONT-02 | Phase 3: Public Frontend + Integrations | Complete |
+| FRONT-03 | Phase 3: Public Frontend + Integrations | Complete |
+| FRONT-04 | Phase 3: Public Frontend + Integrations | Complete |
+| FRONT-05 | Phase 3: Public Frontend + Integrations | Complete |
+| FRONT-06 | Phase 3: Public Frontend + Integrations | Complete |
 
 **Coverage:**
 - v1 requirements: 22 total

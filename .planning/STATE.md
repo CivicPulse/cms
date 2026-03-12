@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: in-progress
-stopped_at: Completed 03-02-PLAN.md
-last_updated: "2026-03-12T03:13:17Z"
+status: executing
+stopped_at: Completed 03-00-PLAN.md
+last_updated: "2026-03-12T03:25:51.831Z"
 last_activity: 2026-03-12 -- Phase 3 Plan 2 complete
 progress:
   total_phases: 3
   completed_phases: 2
   total_plans: 12
-  completed_plans: 8
+  completed_plans: 9
   percent: 67
 ---
 
@@ -60,6 +60,7 @@ Progress: [██████░░░░] 67%
 | Phase 02-content-collections-tenant-config P03 | multi-session | 3 tasks | 7 files |
 | Phase 03-public-frontend-integrations P01 | 3min | 2 tasks | 6 files |
 | Phase 03-public-frontend-integrations P02 | 4min | 2 tasks | 8 files |
+| Phase 03 P00 | 15min | 2 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -94,6 +95,9 @@ Recent decisions affecting current work:
 - [Phase 03-public-frontend-integrations P02]: Tailwind v4 CSS-first config -- no tailwind.config.js, all theming via @theme in globals.css
 - [Phase 03-public-frontend-integrations P02]: Middleware uses process.env.SITE_DOMAIN directly -- Edge Runtime cannot reliably import Zod validation
 - [Phase 03-public-frontend-integrations P02]: lib/tenant.ts created in Task 1 (Rule 3 deviation) -- frontend layout imports require it to compile
+- [Phase 03]: Used draft: false on payload.create instead of _status: published for type-safe post publishing in fixtures
+- [Phase 03]: Omitted navItems from seedSiteSettings -- field does not exist in SiteSettings collection
+- [Phase 03]: cleanupTestData archives tenant instead of deleting -- aligns with Tenants.delete returning false (soft-delete pattern)
 
 ### Pending Todos
 
@@ -106,6 +110,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-12T03:13:17Z
-Stopped at: Completed 03-02-PLAN.md
-Resume file: .planning/phases/03-public-frontend-integrations/03-02-SUMMARY.md
+Last session: 2026-03-12T03:25:51.825Z
+Stopped at: Completed 03-00-PLAN.md
+Resume file: None
