@@ -102,7 +102,11 @@ Plans:
   4. TypeScript errors in `scripts/smoke-test.ts` and `src/tests/phase2-smoke.ts` are resolved
   5. `npm run build` completes with zero type errors
 
-Plans: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 05-01-PLAN.md — Server actions refactoring: create src/actions/newsletter.ts, rewire NewsletterForm + ThankYouForm to use server actions, remove runApiUrl prop from entire 15-file chain
+- [ ] 05-02-PLAN.md — Type cast cleanup + webhook guard: replace navItems casts (8 files), featuredImage casts, add WEBHOOK_SECRET runtime guard, fix smoke test types, final build verification
 
 ## Progress
 
@@ -115,4 +119,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | 2. Content Collections + Tenant Config | 3/3 | Complete | 2026-03-12 |
 | 3. Public Frontend + Integrations | 7/7 | Complete | 2026-03-12 |
 | 4. Phase 3 Drizzle Migration | 0/1 | Pending | - |
-| 5. Tech Debt Cleanup | 0/0 | Pending | - |
+| 5. Tech Debt Cleanup | 0/2 | Pending | - |
