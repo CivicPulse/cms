@@ -62,9 +62,10 @@ Plans:
   4. A visitor can submit the newsletter signup form with name and email; the form POSTs to run-api's subscriber endpoint with the correct campaign ID and displays success/error feedback
   5. Three visually distinct templates are available; a campaign can switch templates via site-settings without losing any content, and the selected template drives layout and color rendering
 
-**Plans**: 5 plans
+**Plans**: 6 plans
 
 Plans:
+- [ ] 03-00-PLAN.md — Wave 0: Playwright config + stub test files for all 9 requirement-mapped behavioral tests (ALL)
 - [ ] 03-01-PLAN.md — Schema + webhook pipeline: Posts versions/drafts + featuredImage, SiteSettings navItems, afterChange webhook hook, email-status skipWebhook context, new env vars (HOOK-01, HOOK-02, HOOK-03)
 - [ ] 03-02-PLAN.md — Frontend infrastructure: Tailwind CSS v4 + PostCSS, subdomain middleware, frontend layout with fonts, lib utilities for tenant data + template selection + run-api (FRONT-01)
 - [ ] 03-03-PLAN.md — Shared components + block renderers: InitialsAvatar, PostCard, Pagination, ShareButtons, NewsletterForm, MobileNav, StickyActionBar, Footer, BlockRenderer + 4 block renderers (FRONT-06)
@@ -80,4 +81,4 @@ Phases execute in numeric order: 1 -> 2 -> 3
 |-------|----------------|--------|-----------|
 | 1. Multi-Tenant Foundation | 3/3 | Complete | 2026-03-11 |
 | 2. Content Collections + Tenant Config | 3/3 | Complete   | 2026-03-12 |
-| 3. Public Frontend + Integrations | 0/5 | Not started | - |
+| 3. Public Frontend + Integrations | 0/6 | Not started | - |
