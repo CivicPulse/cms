@@ -91,6 +91,9 @@ Recent decisions affecting current work:
 - [Phase 03-public-frontend-integrations P01]: Use process.env.* directly in webhook hook (not env.ts import) -- hooks run in Payload context
 - [Phase 03-public-frontend-integrations P01]: Fire-and-forget webhook via fetch().catch() -- does not block CMS response
 - [Phase 03-public-frontend-integrations P01]: Guard on operation type: update requires draft->published transition; create requires direct publish
+- [Phase 03-public-frontend-integrations P02]: Tailwind v4 CSS-first config -- no tailwind.config.js, all theming via @theme in globals.css
+- [Phase 03-public-frontend-integrations P02]: Middleware uses process.env.SITE_DOMAIN directly -- Edge Runtime cannot reliably import Zod validation
+- [Phase 03-public-frontend-integrations P02]: lib/tenant.ts created in Task 1 (Rule 3 deviation) -- frontend layout imports require it to compile
 
 ### Pending Todos
 
@@ -103,6 +106,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-12T03:12:29Z
-Stopped at: Completed 03-01-PLAN.md
-Resume file: .planning/phases/03-public-frontend-integrations/03-01-SUMMARY.md
+Last session: 2026-03-12T03:13:17Z
+Stopped at: Completed 03-02-PLAN.md
+Resume file: .planning/phases/03-public-frontend-integrations/03-02-SUMMARY.md

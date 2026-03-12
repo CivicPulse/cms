@@ -35,7 +35,7 @@
 
 ### Frontend
 
-- [ ] **FRONT-01**: Next.js middleware resolves tenant from request subdomain and injects tenant context into all Server Components
+- [x] **FRONT-01**: Next.js middleware resolves tenant from request subdomain and injects tenant context into all Server Components
 - [ ] **FRONT-02**: Public homepage renders candidate name, photo, tagline, office, and issues — all data-driven from tenant site-settings
 - [ ] **FRONT-03**: Public blog feed renders published posts (web or both) for the current tenant
 - [ ] **FRONT-04**: Individual post page renders post content with structured metadata
@@ -89,7 +89,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | HOOK-01 | Phase 3: Public Frontend + Integrations | Complete |
 | HOOK-02 | Phase 3: Public Frontend + Integrations | Complete |
 | HOOK-03 | Phase 3: Public Frontend + Integrations | Complete |
-| FRONT-01 | Phase 3: Public Frontend + Integrations | Pending |
+| FRONT-01 | Phase 3: Public Frontend + Integrations | Complete |
 | FRONT-02 | Phase 3: Public Frontend + Integrations | Pending |
 | FRONT-03 | Phase 3: Public Frontend + Integrations | Pending |
 | FRONT-04 | Phase 3: Public Frontend + Integrations | Pending |
