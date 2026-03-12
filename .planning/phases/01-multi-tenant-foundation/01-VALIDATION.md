@@ -1,10 +1,11 @@
 ---
 phase: 1
 slug: multi-tenant-foundation
-status: draft
-nyquist_compliant: false
-wave_0_complete: false
+status: complete
+nyquist_compliant: true
+wave_0_complete: true
 created: 2026-03-11
+updated: 2026-03-12
 ---
 
 # Phase 1 — Validation Strategy
@@ -38,15 +39,15 @@ created: 2026-03-11
 
 | Task ID | Plan | Wave | Requirement | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|-----------|-------------------|-------------|--------|
-| env-validation | 01 | 0 | FOUND-01 | smoke | `node -e "delete process.env.PAYLOAD_SECRET; require('./dist/env.js')"` | ❌ W0 | ⬜ pending |
-| db-url-validation | 01 | 0 | FOUND-01 | smoke | `node -e "delete process.env.DATABASE_URL; require('./dist/env.js')"` | ❌ W0 | ⬜ pending |
-| postgres-adapter | 01 | 1 | FOUND-02 | smoke | `npx payload migrate` against fresh Postgres | ❌ W0 | ⬜ pending |
-| migrations-dir | 01 | 1 | FOUND-02 | static | `ls src/migrations/` | ❌ W0 | ⬜ pending |
-| tenants-collection | 01 | 1 | FOUND-04 | smoke | `npx tsx scripts/smoke-test.ts` | ❌ W0 | ⬜ pending |
-| plugin-install | 01 | 1 | FOUND-03 | integration | `npx tsx scripts/smoke-test.ts` | ❌ W0 | ⬜ pending |
-| campaign-manager-isolation | 01 | 2 | FOUND-05 | integration | `npx tsx scripts/smoke-test.ts` (two tenants, cross-query) | ❌ W0 | ⬜ pending |
-| admin-ui-isolation | 01 | 2 | FOUND-03 | manual | Log in as campaign-manager; verify zero cross-tenant docs in list views | N/A | ⬜ pending |
-| cleanup-disabled | 01 | 1 | FOUND-06 | static | `grep "cleanupAfterTenantDelete" src/payload.config.ts` | N/A | ⬜ pending |
+| env-validation | 01 | 0 | FOUND-01 | smoke | `npx tsx scripts/test-env-validation.ts` | scripts/test-env-validation.ts | ✅ green |
+| db-url-validation | 01 | 0 | FOUND-01 | smoke | `npx tsx scripts/test-env-validation.ts` | scripts/test-env-validation.ts | ✅ green |
+| postgres-adapter | 01 | 1 | FOUND-02 | smoke | `npx payload migrate` against fresh Postgres | N/A | ✅ green |
+| migrations-dir | 01 | 1 | FOUND-02 | static | `ls src/migrations/` | N/A | ✅ green |
+| tenants-collection | 01 | 1 | FOUND-04 | smoke | `npx tsx scripts/smoke-test.ts` | scripts/smoke-test.ts | ✅ green |
+| plugin-install | 01 | 1 | FOUND-03 | integration | `npx tsx scripts/smoke-test.ts` | scripts/smoke-test.ts | ✅ green |
+| campaign-manager-isolation | 01 | 2 | FOUND-05 | integration | `npx tsx scripts/smoke-test.ts` (two tenants, cross-query) | scripts/smoke-test.ts | ✅ green |
+| admin-ui-isolation | 01 | 2 | FOUND-03 | manual | Log in as campaign-manager; verify zero cross-tenant docs in list views | N/A | ✅ green |
+| cleanup-disabled | 01 | 1 | FOUND-06 | static | `npx tsx scripts/test-env-validation.ts` | scripts/test-env-validation.ts | ✅ green |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -54,10 +55,10 @@ created: 2026-03-11
 
 ## Wave 0 Requirements
 
-- [ ] `scripts/smoke-test.ts` — end-to-end smoke covering FOUND-03, FOUND-04, FOUND-05 (create two tenants, create posts in each, query with tenant A user and assert B data absent)
-- [ ] `src/env.ts` — Zod validation module (prerequisite for FOUND-01 tests)
-- [ ] `docker-compose.yml` — Postgres dev container (prerequisite for all DB tests)
-- [ ] `src/migrations/` — directory created by `payload migrate:create` after config changes
+- [x] `scripts/smoke-test.ts` — end-to-end smoke covering FOUND-03, FOUND-04, FOUND-05 (create two tenants, create posts in each, query with tenant A user and assert B data absent)
+- [x] `src/env.ts` — Zod validation module (prerequisite for FOUND-01 tests)
+- [x] `docker-compose.yml` — Postgres dev container (prerequisite for all DB tests)
+- [x] `src/migrations/` — directory created by `payload migrate:create` after config changes
 
 ---
 
@@ -72,11 +73,27 @@ created: 2026-03-11
 
 ## Validation Sign-Off
 
-- [ ] All tasks have `<automated>` verify or Wave 0 dependencies
-- [ ] Sampling continuity: no 3 consecutive tasks without automated verify
-- [ ] Wave 0 covers all MISSING references
-- [ ] No watch-mode flags
-- [ ] Feedback latency < 30s
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] All tasks have `<automated>` verify or Wave 0 dependencies
+- [x] Sampling continuity: no 3 consecutive tasks without automated verify
+- [x] Wave 0 covers all MISSING references
+- [x] No watch-mode flags
+- [x] Feedback latency < 30s
+- [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** 2026-03-12 — Nyquist auditor filled all 3 gaps; 8/8 assertions green
+
+---
+
+## Validation Audit 2026-03-12
+
+| Metric | Count |
+|--------|-------|
+| Gaps found | 3 |
+| Resolved | 3 |
+| Escalated | 0 |
+
+**Details:**
+- `env-validation` (MISSING → COVERED): Added subprocess-based test asserting ZodError on missing/short PAYLOAD_SECRET
+- `db-url-validation` (MISSING → COVERED): Added subprocess-based test asserting ZodError on missing DATABASE_URL
+- `cleanup-disabled` (PARTIAL → COVERED): Added static regex assertion on `cleanupAfterTenantDelete: false` in payload.config.ts
+- Test file: `scripts/test-env-validation.ts` (8 assertions, all green)
