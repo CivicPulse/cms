@@ -80,7 +80,7 @@ async function main() {
       where: { email: { equals: 'superadmin@smoke-test.local' } },
       overrideAccess: true,
     })
-    superAdmin = existing.docs[0] as { id: number; email: string }
+    superAdmin = existing.docs[0]
   }
   assert(!!superAdmin?.id, 'Super-admin user created or found')
 
@@ -105,7 +105,7 @@ async function main() {
       where: { slug: { equals: 'tenant-a' } },
       overrideAccess: true,
     })
-    tenantA = existing.docs[0] as { id: number }
+    tenantA = existing.docs[0]
   }
 
   try {
@@ -125,7 +125,7 @@ async function main() {
       where: { slug: { equals: 'tenant-b' } },
       overrideAccess: true,
     })
-    tenantB = existing.docs[0] as { id: number }
+    tenantB = existing.docs[0]
   }
 
   assert(!!tenantA?.id, 'FOUND-04: Tenant A created with slug, domain, status fields')
@@ -153,7 +153,7 @@ async function main() {
         where: { email: { equals: email } },
         overrideAccess: true,
       })
-      return existing.docs[0] as { id: number; email: string }
+      return existing.docs[0]
     }
   }
 
@@ -190,7 +190,7 @@ async function main() {
       },
       overrideAccess: true,
     })
-    postA = existing.docs[0] as { id: number }
+    postA = existing.docs[0]
   }
 
   try {
@@ -216,7 +216,7 @@ async function main() {
       },
       overrideAccess: true,
     })
-    postB = existing.docs[0] as { id: number }
+    postB = existing.docs[0]
   }
 
   assert(!!postA?.id, 'Post created under Tenant A')

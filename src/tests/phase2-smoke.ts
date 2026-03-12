@@ -41,6 +41,8 @@ for (const file of envFiles) {
 const { getPayload } = await import('payload')
 const { default: config } = await import('../payload.config')
 
+import type { SiteSetting } from '../payload-types'
+
 let failures = 0
 
 function pass(msg: string) {
@@ -179,7 +181,7 @@ async function main() {
     })
     // If update silently drops the field (due to access.update), check if it was actually changed
     const updated = await payload.findByID({ collection: 'posts', id: emailPost.id, overrideAccess: true })
-    if ((updated as unknown as Record<string, unknown>).emailStatus === 'sent') {
+    if (updated.emailStatus === 'sent') {
       fail('Campaign manager should not be able to update emailStatus')
     } else {
       pass('Campaign manager cannot update emailStatus (field silently ignored by access control)')
@@ -204,7 +206,7 @@ async function main() {
       user: superAdmin,
     })
     const updated = await payload.findByID({ collection: 'posts', id: emailPost.id, overrideAccess: true })
-    if ((updated as unknown as Record<string, unknown>).emailStatus === 'scheduled') {
+    if (updated.emailStatus === 'scheduled') {
       pass('Super-admin can update emailStatus')
     } else {
       fail('Super-admin emailStatus update did not persist')
@@ -275,7 +277,7 @@ async function main() {
 
   // Verify blocks were stored correctly
   const readPageA = await payload.findByID({ collection: 'pages', id: pageA.id, overrideAccess: true })
-  const layout = (readPageA as unknown as Record<string, unknown>).layout as Array<Record<string, unknown>>
+  const layout = readPageA.layout
   if (Array.isArray(layout) && layout.length === 3) {
     pass('Page layout stored 3 blocks correctly')
   } else {
@@ -325,7 +327,7 @@ async function main() {
   console.log('\n[CONF-01] SiteSettings one-per-tenant')
 
   // Create SiteSettings for tenant A — should succeed
-  let siteSettingsA: Record<string, unknown>
+  let siteSettingsA: Partial<SiteSetting>
   try {
     const existing = await payload.find({
       collection: 'site-settings',
@@ -334,10 +336,10 @@ async function main() {
       overrideAccess: true,
     })
     if (existing.docs.length > 0) {
-      siteSettingsA = existing.docs[0] as unknown as Record<string, unknown>
+      siteSettingsA = existing.docs[0]
       pass('SiteSettings for tenant A already exists (idempotent)')
     } else {
-      siteSettingsA = (await payload.create({
+      siteSettingsA = await payload.create({
         collection: 'site-settings',
         data: {
           candidateName: 'Jane Doe',
@@ -351,7 +353,7 @@ async function main() {
           tenant: tenantA.id,
         },
         overrideAccess: true,
-      })) as unknown as Record<string, unknown>
+      })
       pass('SiteSettings created for tenant A')
     }
   } catch (err: unknown) {

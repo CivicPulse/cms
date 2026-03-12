@@ -20,9 +20,10 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
   const siteSettings = await getSiteSettings(tenant.id)
   const candidateName = siteSettings?.candidateName ?? tenant.displayName
 
-  // Access featuredImage via type assertion (field exists in collection, not in generated types)
-  const postRecord = post as unknown as Record<string, unknown>
-  const featuredImage = postRecord.featuredImage as { url?: string; alt?: string } | null | undefined
+  const featuredImage =
+    typeof post.featuredImage === 'object' && post.featuredImage !== null
+      ? post.featuredImage
+      : null
 
   return {
     title: `${post.title} | ${candidateName}`,
@@ -47,12 +48,10 @@ export default async function PostPage({ params }: PostPageProps) {
   const Template = getTemplate(siteSettings.activeTemplateKey)
   const campaignId = tenant.id.toString()
 
-  // Access featuredImage via type assertion (field exists in collection, not in generated types)
-  const postRecord = post as unknown as Record<string, unknown>
-  const featuredImage = postRecord.featuredImage as
-    | { url?: string | null; alt?: string | null }
-    | null
-    | undefined
+  const featuredImage =
+    typeof post.featuredImage === 'object' && post.featuredImage !== null
+      ? post.featuredImage
+      : null
 
   // Build the public share URL
   const tenantSlug = tenant.slug
