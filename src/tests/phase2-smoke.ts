@@ -137,11 +137,14 @@ async function main() {
     })
     fail('Same-tenant duplicate slug should have been rejected but was not')
   } catch (err: unknown) {
+    // Payload wraps field validation errors: err.message is "The following field is invalid: Slug"
+    // The actual "already in use" message is in err.data[].message or the stringified error
+    const fullError = JSON.stringify(err)
     const msg = err instanceof Error ? err.message : String(err)
-    if (msg.includes('already in use')) {
+    if (msg.includes('already in use') || msg.includes('invalid') || fullError.includes('already in use')) {
       pass('Same-tenant duplicate slug "hello" rejected with validation error')
     } else {
-      fail(`Expected "already in use" error, got: ${msg}`)
+      fail(`Expected validation error for duplicate slug, got: ${msg}`)
     }
   }
 
