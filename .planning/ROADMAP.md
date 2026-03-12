@@ -15,8 +15,9 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Multi-Tenant Foundation** - Migrate to PostgreSQL, wire multi-tenant plugin, enforce tenant isolation with smoke-tested proof
 - [x] **Phase 2: Content Collections + Tenant Config** - Define all content types (posts, pages, media) with R2 storage, per-tenant site-settings, and REST API seeding (completed 2026-03-12)
 - [x] **Phase 3: Public Frontend + Integrations** - Subdomain-based tenant resolution, data-driven templates, webhook pipeline to run-api, and newsletter signup (completed 2026-03-12)
-- [ ] **Phase 4: Phase 3 Drizzle Migration** - Generate and commit missing migration for Phase 3 schema changes (gap closure)
-- [ ] **Phase 5: Tech Debt Cleanup** - Resolve stale type casts, orphaned exports, missing runtime guards, and TS errors from audit
+- [x] **Phase 4: Phase 3 Drizzle Migration** - Generate and commit missing migration for Phase 3 schema changes (gap closure) (completed 2026-03-12)
+- [x] **Phase 5: Tech Debt Cleanup** - Resolve stale type casts, orphaned exports, missing runtime guards, and TS errors from audit (completed 2026-03-12)
+- [ ] **Phase 6: Audit Tech Debt Sweep** - Remove dead code, fix inconsistent env reads, eliminate duplicate conditions from v1.0 audit findings
 
 ## Phase Details
 
@@ -88,7 +89,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 04-01-PLAN.md — Generate Phase 3 Drizzle migration, verify completeness with second migrate:create, confirm build passes (FOUND-02)
+- [x] 04-01-PLAN.md — Generate Phase 3 Drizzle migration, verify completeness with second migrate:create, confirm build passes (FOUND-02)
 
 ### Phase 5: Tech Debt Cleanup
 **Goal**: Resolve accumulated tech debt identified in the v1.0 milestone audit — remove stale type casts, consolidate duplicated API helpers, add missing runtime guards, and fix TypeScript errors
@@ -105,18 +106,36 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 05-01-PLAN.md — Server actions refactoring: create src/actions/newsletter.ts, rewire NewsletterForm + ThankYouForm to use server actions, remove runApiUrl prop from entire 15-file chain
-- [ ] 05-02-PLAN.md — Type cast cleanup + webhook guard: replace navItems casts (8 files), featuredImage casts, add WEBHOOK_SECRET runtime guard, fix smoke test types, final build verification
+- [x] 05-01-PLAN.md — Server actions refactoring: create src/actions/newsletter.ts, rewire NewsletterForm + ThankYouForm to use server actions, remove runApiUrl prop from entire 15-file chain
+- [x] 05-02-PLAN.md — Type cast cleanup + webhook guard: replace navItems casts (8 files), featuredImage casts, add WEBHOOK_SECRET runtime guard, fix smoke test types, final build verification
+
+### Phase 6: Audit Tech Debt Sweep
+**Goal**: Eliminate remaining code-level tech debt surfaced by the v1.0 milestone audit — dead code, inconsistent patterns, and a duplicate condition
+**Depends on**: Phase 5
+**Requirements**: None (quality improvement)
+**Gap Closure:** Addresses 5 tech debt items from v1.0 re-audit
+**Success Criteria** (what must be TRUE):
+  1. `src/lib/api.ts` no longer falls back to `NEXT_PUBLIC_RUN_API_BASE_URL` (dead code removed)
+  2. `src/app/(frontend)/blog/[slug]/page.tsx` reads `SITE_DOMAIN` via the `env` object, not `process.env` directly
+  3. `getTemplateKey` export removed from `src/lib/templates.ts` (or confirmed used)
+  4. Duplicate `host.endsWith('.localhost')` condition in `src/middleware.ts` is deduplicated
+  5. `npm run build` passes with zero errors after all changes
+
+**Plans**: 1 plan
+
+Plans:
+- [ ] 06-01-PLAN.md — Dead code removal + pattern consistency: remove NEXT_PUBLIC_ fallback, route SITE_DOMAIN through env.ts, remove dead getTemplateKey export, fix duplicate middleware condition, verify build
 
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
+Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Multi-Tenant Foundation | 3/3 | Complete | 2026-03-11 |
 | 2. Content Collections + Tenant Config | 3/3 | Complete | 2026-03-12 |
 | 3. Public Frontend + Integrations | 7/7 | Complete | 2026-03-12 |
-| 4. Phase 3 Drizzle Migration | 0/1 | Pending | - |
-| 5. Tech Debt Cleanup | 0/2 | Pending | - |
+| 4. Phase 3 Drizzle Migration | 1/1 | Complete | 2026-03-12 |
+| 5. Tech Debt Cleanup | 2/2 | Complete | 2026-03-12 |
+| 6. Audit Tech Debt Sweep | 0/1 | Pending | - |
