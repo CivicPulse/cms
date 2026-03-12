@@ -4,6 +4,7 @@ import { getTenantBySlug, getSiteSettings, getPostBySlug } from '@/lib/tenant'
 import { getTemplate } from '@/lib/templates'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import { ShareButtons } from '@/components/shared/ShareButtons'
+import { env } from '@/env'
 
 type PostPageProps = {
   params: Promise<{ slug: string }>
@@ -55,10 +56,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
   // Build the public share URL
   const tenantSlug = tenant.slug
-  const siteDomain = process.env.SITE_DOMAIN
-  const shareUrl = siteDomain
-    ? `https://${tenantSlug}.${siteDomain}/blog/${post.slug}`
-    : `/blog/${post.slug}`
+  const shareUrl = `https://${tenantSlug}.${env.SITE_DOMAIN}/blog/${post.slug}`
 
   return (
     <Template siteSettings={siteSettings} campaignId={campaignId}>
