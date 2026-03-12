@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: in-progress
-stopped_at: "Completed 02-01-PLAN.md"
-last_updated: "2026-03-12T00:05:15Z"
-last_activity: 2026-03-12 -- Phase 2 Plan 1 complete
+stopped_at: "Completed 02-02-PLAN.md"
+last_updated: "2026-03-12T00:11:53Z"
+last_activity: 2026-03-12 -- Phase 2 Plan 2 complete
 progress:
   total_phases: 3
   completed_phases: 1
   total_plans: 6
-  completed_plans: 4
-  percent: 44
+  completed_plans: 5
+  percent: 56
 ---
 
 # Project State
@@ -26,16 +26,16 @@ See: .planning/PROJECT.md (updated 2026-03-11)
 ## Current Position
 
 Phase: 2 of 3 (Content Collections + Tenant Config)
-Plan: 1 of 3 in Phase 2 -- COMPLETE
-Status: Phase 2 in progress, Plan 02-01 complete
-Last activity: 2026-03-12 -- Phase 2 Plan 1 complete
+Plan: 2 of 3 in Phase 2 -- COMPLETE
+Status: Phase 2 in progress, Plan 02-02 complete
+Last activity: 2026-03-12 -- Phase 2 Plan 2 complete
 
-Progress: [####░░░░░░] 44%
+Progress: [######░░░░] 56%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 4
+- Total plans completed: 5
 - Average duration: -
 - Total execution time: multi-session
 
@@ -44,10 +44,10 @@ Progress: [####░░░░░░] 44%
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-multi-tenant-foundation | 3 | 3 | - |
-| 02-content-collections-tenant-config | 1 | 3 | 13min |
+| 02-content-collections-tenant-config | 2 | 3 | 8min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01, 01-02, 01-03, 02-01
+- Last 5 plans: 01-01, 01-02, 01-03, 02-01, 02-02
 - Trend: on track
 
 *Updated after each plan completion*
@@ -55,6 +55,7 @@ Progress: [####░░░░░░] 44%
 | Phase 01-multi-tenant-foundation P02 | 10 | 3 tasks | 4 files |
 | Phase 01-multi-tenant-foundation P03 | multi-session | 3 tasks | 4 files |
 | Phase 02-content-collections-tenant-config P01 | 13min | 2 tasks | 8 files |
+| Phase 02-content-collections-tenant-config P02 | 3min | 2 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -78,6 +79,9 @@ Recent decisions affecting current work:
 - [Phase 02-content-collections-tenant-config P01]: Field-level validate (not unique: true) for per-tenant slug uniqueness — allows cross-tenant slug reuse
 - [Phase 02-content-collections-tenant-config P01]: emailStatus and emailSentAt use access.update + admin.readOnly for defense-in-depth
 - [Phase 02-content-collections-tenant-config P01]: ESLint v10 with eslint-config-next/typescript — react plugin incompatible, TypeScript-only config used
+- [Phase 02-content-collections-tenant-config P02]: Pages + Media registered in payload.config.ts immediately (not deferred to Plan 03) to enable smoke test and tenant field injection
+- [Phase 02-content-collections-tenant-config P02]: IssuesBlock uses plain text (not richText) for description — consistent card styling
+- [Phase 02-content-collections-tenant-config P02]: Media has no disableLocalStorage or s3 config — storage-s3 plugin sets these automatically
 
 ### Pending Todos
 
@@ -90,6 +94,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-12T00:05:15Z
-Stopped at: Completed 02-01-PLAN.md
-Resume file: .planning/phases/02-content-collections-tenant-config/02-02-PLAN.md
+Last session: 2026-03-12T00:11:53Z
+Stopped at: Completed 02-02-PLAN.md
+Resume file: .planning/phases/02-content-collections-tenant-config/02-03-PLAN.md
