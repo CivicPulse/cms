@@ -14,11 +14,7 @@ export function ClassicLayout({
   children,
   campaignId,
 }: ClassicLayoutProps) {
-  // navItems exists in the SiteSettings collection but may not be in generated types yet
-  const navItems =
-    ((siteSettings as unknown as Record<string, unknown>).navItems as
-      | Array<{ label: string; url: string }>
-      | undefined) ?? []
+  const navItems = siteSettings.navItems ?? []
 
   return (
     <div className="font-serif text-classic-text bg-classic-bg min-h-screen">

@@ -14,11 +14,7 @@ export function ModernLayout({
   children,
   campaignId,
 }: ModernLayoutProps) {
-  // navItems exists in the SiteSettings collection but may not be in generated types yet
-  const navItems =
-    ((siteSettings as unknown as Record<string, unknown>).navItems as
-      | Array<{ label: string; url: string }>
-      | undefined) ?? []
+  const navItems = siteSettings.navItems ?? []
 
   return (
     <div className="font-sans text-modern-text bg-modern-bg min-h-screen">

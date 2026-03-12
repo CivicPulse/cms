@@ -11,11 +11,7 @@ export function ModernNav({ siteSettings }: ModernNavProps) {
   const { candidateName, logo } = siteSettings
   const populatedLogo = typeof logo === 'object' && logo !== null ? (logo as Media) : null
 
-  // navItems exists in the SiteSettings collection but may not be in generated types yet
-  const items =
-    ((siteSettings as unknown as Record<string, unknown>).navItems as
-      | Array<{ label: string; url: string }>
-      | undefined) ?? []
+  const items = siteSettings.navItems ?? []
 
   return (
     <nav className="bg-modern-bg shadow-sm">

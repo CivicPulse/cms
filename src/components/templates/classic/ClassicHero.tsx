@@ -19,11 +19,7 @@ export function ClassicHero({ siteSettings }: ClassicHeroProps) {
       ? (candidatePhoto as Media)
       : null
 
-  // navItems exists in the SiteSettings collection but may not be in generated types yet
-  const items =
-    ((siteSettings as unknown as Record<string, unknown>).navItems as
-      | Array<{ label: string; url: string }>
-      | undefined) ?? []
+  const items = siteSettings.navItems ?? []
   const firstExternal = items.find((item) => item.url.startsWith('http'))
 
   return (
