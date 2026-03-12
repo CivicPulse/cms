@@ -47,9 +47,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Infrastructure + Posts: install storage-s3, extend env.ts with R2/webhook vars, enable API key auth on Users, create ensureUniqueTenantSlug hook, scaffold phase2-smoke.ts, extend Posts with slug + publishAs + email fields (CONT-01, CONT-02)
-- [ ] 02-02-PLAN.md — Pages + Media: create 4 block files (Hero, Text, Issues, Contact), Pages collection with block layout builder, Media upload collection (CONT-03, CONT-04)
-- [ ] 02-03-PLAN.md — SiteSettings + wiring + migration: SiteSettings collection under Configuration group, update payload.config.ts with all new collections + s3Storage plugin, email-status callback route, Phase 2 Drizzle migration, human-verify checkpoint (CONF-01, CONF-02, CONF-03)
+- [x] 02-01-PLAN.md — Infrastructure + Posts: install storage-s3, extend env.ts with R2/webhook vars, enable API key auth on Users, create ensureUniqueTenantSlug hook, scaffold phase2-smoke.ts, extend Posts with slug + publishAs + email fields (CONT-01, CONT-02)
+- [x] 02-02-PLAN.md — Pages + Media: create 4 block files (Hero, Text, Issues, Contact), Pages collection with block layout builder, Media upload collection (CONT-03, CONT-04)
+- [x] 02-03-PLAN.md — SiteSettings + wiring + migration: SiteSettings collection under Configuration group, update payload.config.ts with all new collections + s3Storage plugin, email-status callback route, Phase 2 Drizzle migration, human-verify checkpoint (CONF-01, CONF-02, CONF-03)
 
 ### Phase 3: Public Frontend + Integrations
 **Goal**: Visitors see a fully rendered campaign website at the tenant's subdomain, with data-driven templates, blog content, and newsletter signup -- while post publishing triggers the email delivery pipeline via webhooks to run-api
@@ -62,12 +62,14 @@ Plans:
   4. A visitor can submit the newsletter signup form with name and email; the form POSTs to run-api's subscriber endpoint with the correct campaign ID and displays success/error feedback
   5. Three visually distinct templates are available; a campaign can switch templates via site-settings without losing any content, and the selected template drives layout and color rendering
 
-**Plans**: TBD
+**Plans**: 5 plans
 
 Plans:
-- [ ] 03-01: TBD
-- [ ] 03-02: TBD
-- [ ] 03-03: TBD
+- [ ] 03-01-PLAN.md — Schema + webhook pipeline: Posts versions/drafts + featuredImage, SiteSettings navItems, afterChange webhook hook, email-status skipWebhook context, new env vars (HOOK-01, HOOK-02, HOOK-03)
+- [ ] 03-02-PLAN.md — Frontend infrastructure: Tailwind CSS v4 + PostCSS, subdomain middleware, frontend layout with fonts, lib utilities for tenant data + template selection + run-api (FRONT-01)
+- [ ] 03-03-PLAN.md — Shared components + block renderers: InitialsAvatar, PostCard, Pagination, ShareButtons, NewsletterForm, MobileNav, StickyActionBar, Footer, BlockRenderer + 4 block renderers (FRONT-06)
+- [ ] 03-04-PLAN.md — Template system: Classic + Modern + Bold template components (Layout, Nav, Hero for each), template registry wiring (FRONT-06, FRONT-02)
+- [ ] 03-05-PLAN.md — Page routes: homepage with fixed sections, dynamic pages, blog feed with pagination, post pages with rich text, newsletter signup flow, not-found page, visual verification checkpoint (FRONT-02, FRONT-03, FRONT-04, FRONT-05)
 
 ## Progress
 
@@ -78,4 +80,4 @@ Phases execute in numeric order: 1 -> 2 -> 3
 |-------|----------------|--------|-----------|
 | 1. Multi-Tenant Foundation | 3/3 | Complete | 2026-03-11 |
 | 2. Content Collections + Tenant Config | 3/3 | Complete   | 2026-03-12 |
-| 3. Public Frontend + Integrations | 0/3 | Not started | - |
+| 3. Public Frontend + Integrations | 0/5 | Not started | - |
