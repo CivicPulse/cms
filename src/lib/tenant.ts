@@ -1,4 +1,3 @@
-// Stub -- full implementation in Task 2
 import { headers } from 'next/headers'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'

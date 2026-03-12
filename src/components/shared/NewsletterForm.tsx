@@ -18,6 +18,7 @@ export function NewsletterForm({
   className = '',
 }: NewsletterFormProps) {
   const [email, setEmail] = useState('')
+  const [submittedEmail, setSubmittedEmail] = useState('')
   const [status, setStatus] = useState<Status>('idle')
 
   const handleSubmit = async (e: FormEvent) => {
@@ -35,6 +36,7 @@ export function NewsletterForm({
       )
 
       if (res.ok) {
+        setSubmittedEmail(email)
         setStatus('success')
         setEmail('')
       } else {
@@ -52,7 +54,7 @@ export function NewsletterForm({
           You&apos;re subscribed! Check your inbox.
         </p>
         <a
-          href="/newsletter/thank-you"
+          href={`/newsletter/thank-you?email=${encodeURIComponent(submittedEmail)}&campaignId=${encodeURIComponent(campaignId)}`}
           className="text-sm text-primary hover:underline mt-1 inline-block"
         >
           Want to add your name?
