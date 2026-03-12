@@ -8,7 +8,6 @@ interface ContactBlockProps {
   showNewsletterForm?: boolean | null
   siteSettings?: SiteSetting | null
   campaignId?: string
-  runApiUrl?: string
 }
 
 export function ContactBlockRenderer({
@@ -18,7 +17,6 @@ export function ContactBlockRenderer({
   showNewsletterForm,
   siteSettings,
   campaignId,
-  runApiUrl,
 }: ContactBlockProps) {
   // Fall back to siteSettings contact email if block doesn't specify one
   const email = contactEmail || siteSettings?.contactEmail
@@ -61,11 +59,10 @@ export function ContactBlockRenderer({
           )}
         </div>
 
-        {showNewsletterForm && campaignId && runApiUrl && (
+        {showNewsletterForm && campaignId && (
           <div className="mt-8 pt-8 border-t border-gray-200">
             <NewsletterForm
               campaignId={campaignId}
-              runApiUrl={runApiUrl}
             />
           </div>
         )}

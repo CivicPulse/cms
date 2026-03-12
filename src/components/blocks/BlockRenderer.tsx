@@ -10,14 +10,12 @@ interface BlockRendererProps {
   blocks: Block[]
   siteSettings?: SiteSetting | null
   campaignId?: string
-  runApiUrl?: string
 }
 
 export function BlockRenderer({
   blocks,
   siteSettings,
   campaignId,
-  runApiUrl,
 }: BlockRendererProps) {
   return (
     <>
@@ -59,7 +57,6 @@ export function BlockRenderer({
                   showNewsletterForm={block.showNewsletterForm}
                   siteSettings={siteSettings}
                   campaignId={campaignId}
-                  runApiUrl={runApiUrl}
                 />
               </section>
             )

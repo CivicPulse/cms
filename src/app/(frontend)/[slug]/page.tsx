@@ -37,11 +37,10 @@ export default async function DynamicPage({ params }: PageProps) {
   if (!page) notFound()
 
   const Template = getTemplate(siteSettings.activeTemplateKey)
-  const runApiUrl = process.env.RUN_API_BASE_URL ?? ''
   const campaignId = tenant.id.toString()
 
   return (
-    <Template siteSettings={siteSettings} campaignId={campaignId} runApiUrl={runApiUrl}>
+    <Template siteSettings={siteSettings} campaignId={campaignId}>
       <div className="py-12 px-4">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-3xl font-bold mb-8">{page.title}</h1>
@@ -50,7 +49,6 @@ export default async function DynamicPage({ params }: PageProps) {
               blocks={page.layout}
               siteSettings={siteSettings}
               campaignId={campaignId}
-              runApiUrl={runApiUrl}
             />
           )}
         </div>

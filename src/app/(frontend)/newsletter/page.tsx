@@ -11,11 +11,10 @@ export default async function NewsletterPage() {
   if (!siteSettings) notFound()
 
   const Template = getTemplate(siteSettings.activeTemplateKey)
-  const runApiUrl = process.env.RUN_API_BASE_URL ?? ''
   const campaignId = tenant.id.toString()
 
   return (
-    <Template siteSettings={siteSettings} campaignId={campaignId} runApiUrl={runApiUrl}>
+    <Template siteSettings={siteSettings} campaignId={campaignId}>
       <div className="py-16 px-4">
         <div className="max-w-xl mx-auto text-center">
           <h1 className="text-3xl font-bold mb-4">Stay Connected</h1>
@@ -25,7 +24,6 @@ export default async function NewsletterPage() {
           </p>
           <NewsletterForm
             campaignId={campaignId}
-            runApiUrl={runApiUrl}
           />
         </div>
       </div>

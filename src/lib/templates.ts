@@ -18,7 +18,6 @@ export type LayoutProps = {
   siteSettings: SiteSetting
   children: React.ReactNode
   campaignId: string
-  runApiUrl: string
 }
 
 const templates: Record<TemplateKey, React.ComponentType<LayoutProps>> = {

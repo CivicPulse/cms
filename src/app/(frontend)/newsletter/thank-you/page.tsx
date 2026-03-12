@@ -23,12 +23,11 @@ export default async function ThankYouPage({
   if (!siteSettings) notFound()
 
   const Template = getTemplate(siteSettings.activeTemplateKey)
-  const runApiUrl = process.env.RUN_API_BASE_URL ?? ''
   const campaignId = params.campaignId ?? tenant.id.toString()
 
   return (
-    <Template siteSettings={siteSettings} campaignId={campaignId} runApiUrl={runApiUrl}>
-      <ThankYouForm email={email} campaignId={campaignId} runApiUrl={runApiUrl} />
+    <Template siteSettings={siteSettings} campaignId={campaignId}>
+      <ThankYouForm email={email} campaignId={campaignId} />
     </Template>
   )
 }

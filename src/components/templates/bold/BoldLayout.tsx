@@ -7,14 +7,12 @@ interface BoldLayoutProps {
   siteSettings: SiteSetting
   children: React.ReactNode
   campaignId: string
-  runApiUrl: string
 }
 
 export function BoldLayout({
   siteSettings,
   children,
   campaignId,
-  runApiUrl,
 }: BoldLayoutProps) {
   // navItems exists in the SiteSettings collection but may not be in generated types yet
   const navItems =
@@ -33,7 +31,6 @@ export function BoldLayout({
       <Footer
         siteSettings={siteSettings}
         campaignId={campaignId}
-        runApiUrl={runApiUrl}
       />
     </div>
   )

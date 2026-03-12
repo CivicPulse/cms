@@ -4,10 +4,9 @@ import type { SiteSetting } from '@/payload-types'
 interface FooterProps {
   siteSettings: SiteSetting
   campaignId: string
-  runApiUrl: string
 }
 
-export function Footer({ siteSettings, campaignId, runApiUrl }: FooterProps) {
+export function Footer({ siteSettings, campaignId }: FooterProps) {
   const {
     candidateName,
     officeRunningFor,
@@ -27,7 +26,6 @@ export function Footer({ siteSettings, campaignId, runApiUrl }: FooterProps) {
           <h3 className="text-lg font-semibold mb-3">Stay Updated</h3>
           <NewsletterForm
             campaignId={campaignId}
-            runApiUrl={runApiUrl}
             compact
           />
         </div>

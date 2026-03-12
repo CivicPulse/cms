@@ -60,7 +60,6 @@ export default async function HomePage() {
   const Template = getTemplate(siteSettings.activeTemplateKey)
   const Hero = heroComponents[siteSettings.activeTemplateKey as TemplateKey] ?? ModernHero
 
-  const runApiUrl = process.env.RUN_API_BASE_URL ?? ''
   const campaignId = tenant.id.toString()
 
   const populatedPhoto =
@@ -69,7 +68,7 @@ export default async function HomePage() {
       : null
 
   return (
-    <Template siteSettings={siteSettings} campaignId={campaignId} runApiUrl={runApiUrl}>
+    <Template siteSettings={siteSettings} campaignId={campaignId}>
       {/* 1. Hero from SiteSettings */}
       <Hero siteSettings={siteSettings} />
 
@@ -106,7 +105,6 @@ export default async function HomePage() {
           blocks={homePage.layout}
           siteSettings={siteSettings}
           campaignId={campaignId}
-          runApiUrl={runApiUrl}
         />
       )}
 

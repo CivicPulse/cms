@@ -34,11 +34,10 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const posts = await getPublishedPosts(tenant.id, { page, limit: 9 })
 
   const Template = getTemplate(siteSettings.activeTemplateKey)
-  const runApiUrl = process.env.RUN_API_BASE_URL ?? ''
   const campaignId = tenant.id.toString()
 
   return (
-    <Template siteSettings={siteSettings} campaignId={campaignId} runApiUrl={runApiUrl}>
+    <Template siteSettings={siteSettings} campaignId={campaignId}>
       <div className="py-12 px-4">
         <div className="max-w-6xl mx-auto">
           <h1 className="text-3xl font-bold mb-8">Blog</h1>

@@ -45,7 +45,6 @@ export default async function PostPage({ params }: PostPageProps) {
   if (!post) notFound()
 
   const Template = getTemplate(siteSettings.activeTemplateKey)
-  const runApiUrl = process.env.RUN_API_BASE_URL ?? ''
   const campaignId = tenant.id.toString()
 
   // Access featuredImage via type assertion (field exists in collection, not in generated types)
@@ -63,7 +62,7 @@ export default async function PostPage({ params }: PostPageProps) {
     : `/blog/${post.slug}`
 
   return (
-    <Template siteSettings={siteSettings} campaignId={campaignId} runApiUrl={runApiUrl}>
+    <Template siteSettings={siteSettings} campaignId={campaignId}>
       <article className="py-12 px-4">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-3xl lg:text-4xl font-bold mb-4">{post.title}</h1>

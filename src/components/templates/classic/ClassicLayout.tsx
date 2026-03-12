@@ -7,14 +7,12 @@ interface ClassicLayoutProps {
   siteSettings: SiteSetting
   children: React.ReactNode
   campaignId: string
-  runApiUrl: string
 }
 
 export function ClassicLayout({
   siteSettings,
   children,
   campaignId,
-  runApiUrl,
 }: ClassicLayoutProps) {
   // navItems exists in the SiteSettings collection but may not be in generated types yet
   const navItems =
@@ -33,7 +31,6 @@ export function ClassicLayout({
       <Footer
         siteSettings={siteSettings}
         campaignId={campaignId}
-        runApiUrl={runApiUrl}
       />
     </div>
   )

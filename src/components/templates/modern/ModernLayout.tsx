@@ -7,14 +7,12 @@ interface ModernLayoutProps {
   siteSettings: SiteSetting
   children: React.ReactNode
   campaignId: string
-  runApiUrl: string
 }
 
 export function ModernLayout({
   siteSettings,
   children,
   campaignId,
-  runApiUrl,
 }: ModernLayoutProps) {
   // navItems exists in the SiteSettings collection but may not be in generated types yet
   const navItems =
@@ -33,7 +31,6 @@ export function ModernLayout({
       <Footer
         siteSettings={siteSettings}
         campaignId={campaignId}
-        runApiUrl={runApiUrl}
       />
     </div>
   )
