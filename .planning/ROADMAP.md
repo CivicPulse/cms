@@ -85,7 +85,10 @@ Plans:
   2. `npx payload migrate` applies the migration cleanly against the existing schema
   3. Production deployment flow (push:false) no longer crashes on missing columns
 
-Plans: TBD
+**Plans**: 1 plan
+
+Plans:
+- [ ] 04-01-PLAN.md — Generate Phase 3 Drizzle migration, verify completeness with second migrate:create, confirm build passes (FOUND-02)
 
 ### Phase 5: Tech Debt Cleanup
 **Goal**: Resolve accumulated tech debt identified in the v1.0 milestone audit — remove stale type casts, consolidate duplicated API helpers, add missing runtime guards, and fix TypeScript errors
@@ -111,5 +114,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | 1. Multi-Tenant Foundation | 3/3 | Complete | 2026-03-11 |
 | 2. Content Collections + Tenant Config | 3/3 | Complete | 2026-03-12 |
 | 3. Public Frontend + Integrations | 7/7 | Complete | 2026-03-12 |
-| 4. Phase 3 Drizzle Migration | 0/0 | Pending | - |
+| 4. Phase 3 Drizzle Migration | 0/1 | Pending | - |
 | 5. Tech Debt Cleanup | 0/0 | Pending | - |
