@@ -1,10 +1,10 @@
 'use client'
 
 import { useState, type FormEvent } from 'react'
+import { subscribeAction } from '@/actions/newsletter'
 
 interface NewsletterFormProps {
   campaignId: string
-  runApiUrl: string
   compact?: boolean
   className?: string
 }
@@ -13,7 +13,6 @@ type Status = 'idle' | 'loading' | 'success' | 'error'
 
 export function NewsletterForm({
   campaignId,
-  runApiUrl,
   compact = false,
   className = '',
 }: NewsletterFormProps) {
@@ -26,16 +25,9 @@ export function NewsletterForm({
     setStatus('loading')
 
     try {
-      const res = await fetch(
-        `${runApiUrl}/api/v1/campaigns/${campaignId}/subscribers`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email }),
-        },
-      )
+      const result = await subscribeAction({ email, campaignId })
 
-      if (res.ok) {
+      if (result.ok) {
         setSubmittedEmail(email)
         setStatus('success')
         setEmail('')

@@ -2,16 +2,16 @@
 
 import { useState, type FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
+import { updateSubscriberAction } from '@/actions/newsletter'
 
 interface ThankYouFormProps {
   email: string
   campaignId: string
-  runApiUrl: string
 }
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
 
-export function ThankYouForm({ email, campaignId, runApiUrl }: ThankYouFormProps) {
+export function ThankYouForm({ email, campaignId }: ThankYouFormProps) {
   const router = useRouter()
   const [name, setName] = useState('')
   const [zipCode, setZipCode] = useState('')
@@ -22,21 +22,15 @@ export function ThankYouForm({ email, campaignId, runApiUrl }: ThankYouFormProps
     setStatus('loading')
 
     try {
-      const body: Record<string, string> = {}
-      if (name) body.name = name
-      if (zipCode) body.zipCode = zipCode
+      const result = await updateSubscriberAction({
+        campaignId,
+        email,
+        name: name || undefined,
+        zipCode: zipCode || undefined,
+      })
 
-      const res = await fetch(
-        `${runApiUrl}/api/v1/campaigns/${campaignId}/subscribers/${encodeURIComponent(email)}`,
-        {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(body),
-        },
-      )
-
-      if (!res.ok) {
-        throw new Error('Update failed')
+      if (!result.ok) {
+        throw new Error(result.error || 'Update failed')
       }
 
       setStatus('success')
