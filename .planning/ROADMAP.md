@@ -62,7 +62,7 @@ Plans:
   4. A visitor can submit the newsletter signup form with name and email; the form POSTs to run-api's subscriber endpoint with the correct campaign ID and displays success/error feedback
   5. Three visually distinct templates are available; a campaign can switch templates via site-settings without losing any content, and the selected template drives layout and color rendering
 
-**Plans**: 6 plans
+**Plans**: 7 plans
 
 Plans:
 - [ ] 03-00-PLAN.md — Wave 0: Playwright config + stub test files for all 9 requirement-mapped behavioral tests (ALL)
@@ -71,6 +71,7 @@ Plans:
 - [ ] 03-03-PLAN.md — Shared components + block renderers: InitialsAvatar, PostCard, Pagination, ShareButtons, NewsletterForm, MobileNav, StickyActionBar, Footer, BlockRenderer + 4 block renderers (FRONT-06)
 - [ ] 03-04-PLAN.md — Template system: Classic + Modern + Bold template components (Layout, Nav, Hero for each), template registry wiring (FRONT-06, FRONT-02)
 - [ ] 03-05-PLAN.md — Page routes: homepage with fixed sections, dynamic pages, blog feed with pagination, post pages with rich text, newsletter signup flow, not-found page, visual verification checkpoint (FRONT-02, FRONT-03, FRONT-04, FRONT-05)
+- [ ] 03-06-PLAN.md — Gap closure: Wire thank-you page update handler to call run-api PATCH endpoint, pass email from NewsletterForm to thank-you page via URL params (FRONT-05)
 
 ## Progress
 
@@ -81,4 +82,4 @@ Phases execute in numeric order: 1 -> 2 -> 3
 |-------|----------------|--------|-----------|
 | 1. Multi-Tenant Foundation | 3/3 | Complete | 2026-03-11 |
 | 2. Content Collections + Tenant Config | 3/3 | Complete   | 2026-03-12 |
-| 3. Public Frontend + Integrations | 2/6 | In progress | - |
+| 3. Public Frontend + Integrations | 2/7 | In progress | - |
