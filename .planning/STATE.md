@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: completed
-stopped_at: Phase 2 context gathered
-last_updated: "2026-03-11T21:26:17.763Z"
-last_activity: 2026-03-11 -- Phase 1 all plans complete
+status: in-progress
+stopped_at: "Completed 02-01-PLAN.md"
+last_updated: "2026-03-12T00:05:15Z"
+last_activity: 2026-03-12 -- Phase 2 Plan 1 complete
 progress:
   total_phases: 3
   completed_phases: 1
-  total_plans: 3
-  completed_plans: 3
-  percent: 33
+  total_plans: 6
+  completed_plans: 4
+  percent: 44
 ---
 
 # Project State
@@ -25,17 +25,17 @@ See: .planning/PROJECT.md (updated 2026-03-11)
 
 ## Current Position
 
-Phase: 1 of 3 (Multi-Tenant Foundation) -- COMPLETE
-Plan: 3 of 3 in Phase 1 -- COMPLETE
-Status: Phase 1 done, ready for Phase 2
-Last activity: 2026-03-11 -- Phase 1 all plans complete
+Phase: 2 of 3 (Content Collections + Tenant Config)
+Plan: 1 of 3 in Phase 2 -- COMPLETE
+Status: Phase 2 in progress, Plan 02-01 complete
+Last activity: 2026-03-12 -- Phase 2 Plan 1 complete
 
-Progress: [###░░░░░░░] 33%
+Progress: [####░░░░░░] 44%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 3
+- Total plans completed: 4
 - Average duration: -
 - Total execution time: multi-session
 
@@ -44,15 +44,17 @@ Progress: [###░░░░░░░] 33%
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-multi-tenant-foundation | 3 | 3 | - |
+| 02-content-collections-tenant-config | 1 | 3 | 13min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01, 01-02, 01-03
+- Last 5 plans: 01-01, 01-02, 01-03, 02-01
 - Trend: on track
 
 *Updated after each plan completion*
 | Phase 01-multi-tenant-foundation P01 | 3 | 3 tasks | 5 files |
 | Phase 01-multi-tenant-foundation P02 | 10 | 3 tasks | 4 files |
 | Phase 01-multi-tenant-foundation P03 | multi-session | 3 tasks | 4 files |
+| Phase 02-content-collections-tenant-config P01 | 13min | 2 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -73,6 +75,9 @@ Recent decisions affecting current work:
 - [Phase 01-multi-tenant-foundation P03]: Migration files committed to git — Drizzle migration runner manages schema evolution; push: true is dev-only safety net
 - [Phase 01-multi-tenant-foundation P03]: Smoke test uses overrideAccess: false with real user context to exercise plugin access control — overrideAccess: true bypasses isolation
 - [Phase 01-multi-tenant-foundation P03]: All 6 FOUND requirements verified: FOUND-01 through FOUND-06 satisfied
+- [Phase 02-content-collections-tenant-config P01]: Field-level validate (not unique: true) for per-tenant slug uniqueness — allows cross-tenant slug reuse
+- [Phase 02-content-collections-tenant-config P01]: emailStatus and emailSentAt use access.update + admin.readOnly for defense-in-depth
+- [Phase 02-content-collections-tenant-config P01]: ESLint v10 with eslint-config-next/typescript — react plugin incompatible, TypeScript-only config used
 
 ### Pending Todos
 
@@ -85,6 +90,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-11T21:26:17.757Z
-Stopped at: Phase 2 context gathered
-Resume file: .planning/phases/02-content-collections-tenant-config/02-CONTEXT.md
+Last session: 2026-03-12T00:05:15Z
+Stopped at: Completed 02-01-PLAN.md
+Resume file: .planning/phases/02-content-collections-tenant-config/02-02-PLAN.md

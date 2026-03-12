@@ -16,8 +16,8 @@
 
 ### Content Collections
 
-- [ ] **CONT-01**: `posts` collection: title, content (Lexical), `publishAs` select (web/email/both), slug with per-tenant uniqueness validation
-- [ ] **CONT-02**: `posts` collection email fields conditionally visible: `emailSubject`, `emailPreviewText`, `emailStatus`, `emailSentAt`, `scheduledSendAt`
+- [x] **CONT-01**: `posts` collection: title, content (Lexical), `publishAs` select (web/email/both), slug with per-tenant uniqueness validation
+- [x] **CONT-02**: `posts` collection email fields conditionally visible: `emailSubject`, `emailPreviewText`, `emailStatus`, `emailSentAt`, `scheduledSendAt`
 - [ ] **CONT-03**: `pages` collection: title, slug (per-tenant unique), layout builder with block-based components (hero, text, issues, contact)
 - [ ] **CONT-04**: `media` collection: file uploads backed by Cloudflare R2 via `@payloadcms/storage-s3`; tenant-scoped
 
@@ -79,8 +79,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FOUND-04 | Phase 1: Multi-Tenant Foundation | Complete |
 | FOUND-05 | Phase 1: Multi-Tenant Foundation | Complete |
 | FOUND-06 | Phase 1: Multi-Tenant Foundation | Complete |
-| CONT-01 | Phase 2: Content Collections + Tenant Config | Pending |
-| CONT-02 | Phase 2: Content Collections + Tenant Config | Pending |
+| CONT-01 | Phase 2: Content Collections + Tenant Config | Complete |
+| CONT-02 | Phase 2: Content Collections + Tenant Config | Complete |
 | CONT-03 | Phase 2: Content Collections + Tenant Config | Pending |
 | CONT-04 | Phase 2: Content Collections + Tenant Config | Pending |
 | CONF-01 | Phase 2: Content Collections + Tenant Config | Pending |
