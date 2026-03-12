@@ -7,7 +7,25 @@
  * - bold: Large type, vivid colors, hero-forward, dynamic layout
  */
 
+import type { SiteSetting } from '@/payload-types'
+import { ClassicLayout } from '@/components/templates/classic/ClassicLayout'
+import { ModernLayout } from '@/components/templates/modern/ModernLayout'
+import { BoldLayout } from '@/components/templates/bold/BoldLayout'
+
 export type TemplateKey = 'classic' | 'modern' | 'bold'
+
+export type LayoutProps = {
+  siteSettings: SiteSetting
+  children: React.ReactNode
+  campaignId: string
+  runApiUrl: string
+}
+
+const templates: Record<TemplateKey, React.ComponentType<LayoutProps>> = {
+  classic: ClassicLayout,
+  modern: ModernLayout,
+  bold: BoldLayout,
+} as const
 
 const VALID_KEYS: ReadonlySet<string> = new Set<TemplateKey>(['classic', 'modern', 'bold'])
 
@@ -22,12 +40,10 @@ export function getTemplateKey(key: string): TemplateKey {
   return 'modern'
 }
 
-// Template component mapping -- Plan 03 will populate this with actual
-// React component references for each template's Layout, Hero, PostCard, etc.
-// Example future shape:
-//
-// export const templates: Record<TemplateKey, TemplateComponents> = {
-//   classic: { Layout: ClassicLayout, Hero: ClassicHero, ... },
-//   modern:  { Layout: ModernLayout,  Hero: ModernHero,  ... },
-//   bold:    { Layout: BoldLayout,    Hero: BoldHero,    ... },
-// }
+/**
+ * Returns the Layout component for the given template key.
+ * Falls back to ModernLayout for unknown keys.
+ */
+export function getTemplate(key: string): React.ComponentType<LayoutProps> {
+  return templates[key as keyof typeof templates] ?? templates.modern
+}
