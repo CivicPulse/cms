@@ -14,7 +14,7 @@ import { BoldLayout } from '@/components/templates/bold/BoldLayout'
 
 export type TemplateKey = 'classic' | 'modern' | 'bold'
 
-export type LayoutProps = {
+type LayoutProps = {
   siteSettings: SiteSetting
   children: React.ReactNode
   campaignId: string
