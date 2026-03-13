@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+/* Static theme tokens -- template base palettes and typography */
+@theme {
+  /* Classic template */
+  --color-classic-bg: #f8f5f0;
+  --color-classic-text: #1a1a2e;
+  --color-classic-accent: #1e3a5f;
+  --color-classic-muted: #6b7280;
+  --color-classic-border: #d1c7b7;
+
+  /* Modern template */
+  --color-modern-bg: #ffffff;
+  --color-modern-text: #111827;
+  --color-modern-accent: #374151;
+  --color-modern-muted: #9ca3af;
+  --color-modern-border: #e5e7eb;
+
+  /* Bold template */
+  --color-bold-bg: #0f172a;
+  --color-bold-text: #f8fafc;
+  --color-bold-accent: #e2e8f0;
+  --color-bold-muted: #94a3b8;
+  --color-bold-border: #334155;
+}
+
+/* Dynamic theme values referencing CSS variables */
+@theme inline {
+  --color-primary: var(--site-primary, #2563eb);
+  --color-primary-hover: color-mix(in oklch, var(--site-primary, #2563eb) 85%, black);
+  --color-primary-light: color-mix(in oklch, var(--site-primary, #2563eb) 15%, white);
+
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-merriweather);
+  --font-display: var(--font-space-grotesk);
+
+  --animate-slide-in-right: slide-in-right 0.2s ease-out;
+}
+
+@keyframes slide-in-right {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}

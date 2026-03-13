@@ -1,0 +1,84 @@
+import Link from 'next/link'
+import type { SiteSetting, Media } from '@/payload-types'
+import { InitialsAvatar } from '@/components/shared/InitialsAvatar'
+import { MobileNav } from '@/components/shared/MobileNav'
+
+interface ClassicNavProps {
+  siteSettings: SiteSetting
+}
+
+export function ClassicNav({ siteSettings }: ClassicNavProps) {
+  const { candidateName, logo } = siteSettings
+  const populatedLogo = typeof logo === 'object' && logo !== null ? (logo as Media) : null
+
+  const items = siteSettings.navItems ?? []
+
+  return (
+    <nav className="bg-classic-bg border-b border-classic-border">
+      {/* Desktop nav */}
+      <div className="hidden md:flex items-center justify-between py-4 px-6 max-w-6xl mx-auto">
+        <Link href="/" className="flex items-center gap-3">
+          {populatedLogo?.url ? (
+            <img
+              src={populatedLogo.url}
+              alt={populatedLogo.alt ?? candidateName}
+              className="h-10 w-auto"
+            />
+          ) : (
+            <InitialsAvatar name={candidateName} size="sm" />
+          )}
+          <span className="font-serif text-classic-text font-bold text-lg">
+            {candidateName}
+          </span>
+        </Link>
+
+        <div className="flex items-center gap-6">
+          {items.map((item) => {
+            const isExternal = item.url.startsWith('http')
+            if (isExternal) {
+              return (
+                <a
+                  key={`${item.url}-${item.label}`}
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-serif text-sm text-classic-accent hover:text-primary transition-colors"
+                >
+                  {item.label}
+                </a>
+              )
+            }
+            return (
+              <Link
+                key={`${item.url}-${item.label}`}
+                href={item.url}
+                className="font-serif text-sm text-classic-accent hover:text-primary transition-colors"
+              >
+                {item.label}
+              </Link>
+            )
+          })}
+        </div>
+      </div>
+
+      {/* Mobile nav */}
+      <div className="md:hidden flex items-center justify-between py-4 px-6">
+        <Link href="/" className="flex items-center gap-3">
+          {populatedLogo?.url ? (
+            <img
+              src={populatedLogo.url}
+              alt={populatedLogo.alt ?? candidateName}
+              className="h-8 w-auto"
+            />
+          ) : (
+            <InitialsAvatar name={candidateName} size="sm" />
+          )}
+          <span className="font-serif text-classic-text font-bold">
+            {candidateName}
+          </span>
+        </Link>
+        <MobileNav navItems={items} candidateName={candidateName} />
+      </div>
+    </nav>
+  )
+}
