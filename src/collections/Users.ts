@@ -19,30 +19,50 @@ export const Users: CollectionConfig = {
     // Block login for users whose tenant is suspended or archived.
     // Using afterOperation on 'login' because the resolved user is available there.
     afterOperation: [
-      async ({ operation, result }) => {
+      async ({ operation, result, req }) => {
         if (operation !== 'login') return result
-        const user = (result as { user?: { role?: string; tenants?: Array<{ tenant?: { status?: string } }> } })?.user
+        const user = (result as { user?: { id?: string | number; role?: string; tenants?: Array<{ tenant?: string | number | { id?: string | number; status?: string } }> } })?.user
         if (!user) return result
         // Super-admins are never blocked
         if (user.role === 'super-admin') return result
-        // Check the first tenant assignment (campaign managers belong to one tenant)
-        const tenantStatus = user.tenants?.[0]?.tenant?.status
-        if (tenantStatus === 'suspended') {
-          throw new APIError(
-            'Your account access has been suspended. Contact support.',
-            403,
-            undefined,
-            true,
-          )
+
+        // I1: Check ALL tenant assignments, not just [0].
+        // Also handle unpopulated tenant relations (bare ID) by fetching status.
+        const tenantEntries = user.tenants ?? []
+        for (const entry of tenantEntries) {
+          let status: string | undefined
+
+          if (typeof entry.tenant === 'object' && entry.tenant !== null) {
+            // Tenant relation is populated
+            status = entry.tenant.status
+          } else if (entry.tenant) {
+            // Tenant is a bare ID — fetch to get status
+            const tenantDoc = await req.payload.findByID({
+              collection: 'tenants',
+              id: entry.tenant,
+              overrideAccess: true,
+            })
+            status = tenantDoc?.status as string | undefined
+          }
+
+          if (status === 'suspended') {
+            throw new APIError(
+              'Your account access has been suspended. Contact support.',
+              403,
+              undefined,
+              true,
+            )
+          }
+          if (status === 'archived') {
+            throw new APIError(
+              'This campaign account is no longer active.',
+              403,
+              undefined,
+              true,
+            )
+          }
         }
-        if (tenantStatus === 'archived') {
-          throw new APIError(
-            'This campaign account is no longer active.',
-            403,
-            undefined,
-            true,
-          )
-        }
+
         return result
       },
     ],

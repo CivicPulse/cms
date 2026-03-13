@@ -10,6 +10,7 @@ import { env } from '@/env'
 interface ApiResult {
   ok: boolean
   error?: string
+  status?: number
 }
 
 const baseUrl = env.RUN_API_BASE_URL.replace(/\/$/, '')
@@ -30,10 +31,10 @@ export async function subscribeToNewsletter(params: {
 
     if (!response.ok) {
       const body = await response.text()
-      return { ok: false, error: body || `HTTP ${response.status}` }
+      return { ok: false, error: body || `HTTP ${response.status}`, status: response.status }
     }
 
-    return { ok: true }
+    return { ok: true, status: response.status }
   } catch (err) {
     return {
       ok: false,
@@ -64,10 +65,10 @@ export async function updateSubscriber(params: {
 
     if (!response.ok) {
       const text = await response.text()
-      return { ok: false, error: text || `HTTP ${response.status}` }
+      return { ok: false, error: text || `HTTP ${response.status}`, status: response.status }
     }
 
-    return { ok: true }
+    return { ok: true, status: response.status }
   } catch (err) {
     return {
       ok: false,

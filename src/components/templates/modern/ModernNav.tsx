@@ -38,7 +38,7 @@ export function ModernNav({ siteSettings }: ModernNavProps) {
             if (isExternal) {
               return (
                 <a
-                  key={item.url}
+                  key={`${item.url}-${item.label}`}
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -50,7 +50,7 @@ export function ModernNav({ siteSettings }: ModernNavProps) {
             }
             return (
               <Link
-                key={item.url}
+                key={`${item.url}-${item.label}`}
                 href={item.url}
                 className="font-sans text-sm text-modern-accent hover:text-primary transition-colors"
               >

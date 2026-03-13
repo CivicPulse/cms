@@ -60,11 +60,11 @@ test.describe('Homepage rendering @smoke', () => {
 
   test('homepage displays recent post cards in grid', async ({ page }) => {
     // FRONT-02: post grid with up to 9 published (web/both) post cards
-    // Verify via the /blog page (same query) which renders all posts clearly
-    await page.goto(`http://${tenantSlug}.localhost:3000/blog`)
+    // The homepage includes a post grid section; also verify via /blog for full list
+    await page.goto(`http://${tenantSlug}.localhost:3000/`)
     await page.waitForLoadState('networkidle')
 
-    // The seeded post should be visible in the blog feed
+    // The seeded post should be visible on the homepage post grid
     const pageText = await page.textContent('body')
     expect(pageText).toContain(postTitle)
   })

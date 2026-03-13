@@ -19,8 +19,8 @@ export function BlockRenderer({
 }: BlockRendererProps) {
   return (
     <>
-      {blocks.map((block) => {
-        const key = block.id ?? `${block.blockType}-${Math.random()}`
+      {blocks.map((block, index) => {
+        const key = block.id ?? `${block.blockType}-${index}`
 
         switch (block.blockType) {
           case 'hero':

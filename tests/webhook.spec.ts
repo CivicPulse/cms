@@ -188,8 +188,8 @@ test.describe('Webhook pipeline @smoke', () => {
         webhookCallCount++
         originalHandler(req, res)
         if (webhookCallCount === 1) {
-          // First webhook received — set a short timer then resolve
-          setTimeout(resolve, 3000)
+          // T7: Reduced from 3s to 1s — just enough to detect a spurious second call
+          setTimeout(resolve, 1000)
         }
       })
     })
@@ -215,23 +215,26 @@ test.describe('Webhook pipeline @smoke', () => {
       // Wait for the first webhook
       await firstWebhookPromise
 
-      // Build a valid HMAC-signed email-status callback body
-      const statusBody = JSON.stringify({ emailStatus: 'sent', emailSentAt: new Date().toISOString() })
+      // T2: Serialize body once and compute HMAC over the exact same string
+      // (previously called new Date().toISOString() twice, producing different timestamps)
+      const statusBodyObj = { emailStatus: 'sent', emailSentAt: new Date().toISOString() }
+      const statusBodyStr = JSON.stringify(statusBodyObj)
       const secret = WEBHOOK_SECRET
-      const sig = computeHmac(secret, statusBody)
+      const sig = computeHmac(secret, statusBodyStr)
 
       // Call the email-status route — should update the post WITHOUT re-triggering webhook
       const statusResponse = await request.post(`http://localhost:3000/api/posts/${post.id}/email-status`, {
-        data: { emailStatus: 'sent', emailSentAt: new Date().toISOString() },
         headers: {
           'Content-Type': 'application/json',
           'x-webhook-signature': sig,
         },
+        data: statusBodyStr,
       })
 
       // Allow time for any additional webhook to arrive
+      // T7: Reduced from 3s to 1s to avoid CI timeout pressure
       await callPromise.catch(() => {})
-      await new Promise<void>((resolve) => setTimeout(resolve, 3000))
+      await new Promise<void>((resolve) => setTimeout(resolve, 1000))
 
       expect(statusResponse.ok()).toBe(true)
       // Webhook should have been fired exactly once (for the publish), not again for the email-status update

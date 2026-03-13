@@ -12,8 +12,8 @@ export function StickyActionBar({ navItems, donationUrl }: StickyActionBarProps)
   // Filter to only external links
   const externalItems = navItems.filter((item) => item.url.startsWith('http'))
 
-  // Prepend donation URL if it exists and isn't already in external items
-  if (donationUrl && !externalItems.some((item) => item.url === donationUrl)) {
+  // I8: Match both URL and label to avoid suppressing unrelated nav items
+  if (donationUrl && !externalItems.some((item) => item.url === donationUrl && item.label === 'Donate')) {
     externalItems.unshift({ label: 'Donate', url: donationUrl })
   }
 
@@ -23,9 +23,9 @@ export function StickyActionBar({ navItems, donationUrl }: StickyActionBarProps)
   return (
     <div className="sticky top-0 z-40 bg-primary text-white py-2 px-4">
       <div className="flex gap-3 justify-center flex-wrap">
-        {externalItems.map((item) => (
+        {externalItems.map((item, index) => (
           <a
-            key={item.url}
+            key={`${item.url}-${index}`}
             href={item.url}
             target="_blank"
             rel="noopener noreferrer"

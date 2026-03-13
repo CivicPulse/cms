@@ -149,16 +149,23 @@ export async function cleanupTestData(
   }
 
   try {
-    // Delete the tenant itself
-    // Note: Tenants.delete returns false (soft-delete via archived status)
-    // so we update status to archived instead
-    await payload.update({
+    // Delete the tenant — use hard delete to avoid accumulating archived test records
+    await payload.delete({
       collection: 'tenants',
       id: tenantId,
-      data: { status: 'archived' },
       overrideAccess: true,
     })
   } catch {
-    // Ignore cleanup errors
+    // Fallback: archive if hard delete fails (e.g. foreign key constraints)
+    try {
+      await payload.update({
+        collection: 'tenants',
+        id: tenantId,
+        data: { status: 'archived' },
+        overrideAccess: true,
+      })
+    } catch {
+      // Ignore cleanup errors
+    }
   }
 }

@@ -12,7 +12,6 @@ import { getTestPayload, seedTestTenant, seedSiteSettings, cleanupTestData } fro
  */
 
 test.describe('Template system @smoke', () => {
-  let tenantId: string | number
   const classicSlug = `classic-template-test-${Date.now()}`
   const modernSlug = `modern-template-test-${Date.now()}`
   const boldSlug = `bold-template-test-${Date.now()}`
@@ -59,7 +58,6 @@ test.describe('Template system @smoke', () => {
 
     const boldTenant = await seedTestTenant(payload, boldSlug)
     boldTenantId = boldTenant.id
-    tenantId = boldTenantId
     await payload.create({
       collection: 'site-settings',
       data: {

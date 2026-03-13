@@ -16,6 +16,12 @@ export default async function ThankYouPage({
     redirect('/newsletter')
   }
 
+  // I9: Validate email format before passing to server action
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  if (!emailRegex.test(email)) {
+    redirect('/newsletter')
+  }
+
   const tenant = await getTenantBySlug()
   if (!tenant) notFound()
 

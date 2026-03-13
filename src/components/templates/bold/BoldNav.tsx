@@ -38,7 +38,7 @@ export function BoldNav({ siteSettings }: BoldNavProps) {
             if (isExternal) {
               return (
                 <a
-                  key={item.url}
+                  key={`${item.url}-${item.label}`}
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -50,7 +50,7 @@ export function BoldNav({ siteSettings }: BoldNavProps) {
             }
             return (
               <Link
-                key={item.url}
+                key={`${item.url}-${item.label}`}
                 href={item.url}
                 className="font-sans text-sm text-bold-accent hover:text-primary transition-colors"
               >

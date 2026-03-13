@@ -28,8 +28,11 @@ const templates: Record<TemplateKey, React.ComponentType<LayoutProps>> = {
 
 /**
  * Returns the Layout component for the given template key.
- * Falls back to ModernLayout for unknown keys.
+ * Falls back to ModernLayout for unknown keys (logs warning for debugging).
  */
 export function getTemplate(key: string): React.ComponentType<LayoutProps> {
+  if (!(key in templates)) {
+    console.warn(`Unknown template key "${key}", falling back to "modern"`)
+  }
   return templates[key as keyof typeof templates] ?? templates.modern
 }

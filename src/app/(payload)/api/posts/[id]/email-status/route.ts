@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import crypto from 'node:crypto'
+import { env } from '@/env'
 
 /**
  * POST /api/posts/{id}/email-status
@@ -16,12 +17,13 @@ import crypto from 'node:crypto'
  *   x-webhook-signature: hex digest of HMAC-SHA256(WEBHOOK_SECRET, raw body)
  *
  * Request body (JSON):
- *   { emailStatus: 'sent' | 'failed', emailSentAt?: string (ISO 8601) }
+ *   { emailStatus: 'sent' | 'failed', emailSentAt?: string (ISO 8601), tenantId?: string }
  *
  * Response:
  *   200 { ok: true }
  *   400 { error: string } -- invalid JSON or missing emailStatus
  *   401 { error: 'Invalid signature' } -- HMAC mismatch
+ *   403 { error: string } -- tenant ownership mismatch
  *   500 { error: string } -- unexpected error
  */
 export async function POST(
@@ -35,15 +37,10 @@ export async function POST(
   const rawBody = await req.text()
   const signature = req.headers.get('x-webhook-signature') ?? ''
 
-  // HMAC verification -- use timingSafeEqual to prevent timing attacks
-  const secret = process.env.WEBHOOK_SECRET
-  if (!secret) {
-    // Startup validation in env.ts should have caught this, but defensive check
-    return NextResponse.json(
-      { error: 'Server misconfigured: WEBHOOK_SECRET not set' },
-      { status: 500 },
-    )
-  }
+  const payload = await getPayload({ config: configPromise })
+
+  // HMAC verification -- use timingSafeEqual to prevent timing attacks (I4: use validated env)
+  const secret = env.WEBHOOK_SECRET
 
   const expected = crypto
     .createHmac('sha256', secret)
@@ -61,12 +58,17 @@ export async function POST(
     signatureValid = false
   }
 
+  // C5: Log failed HMAC attempts for security monitoring
   if (!signatureValid) {
+    const ip = req.headers.get('x-forwarded-for') ?? req.headers.get('x-real-ip') ?? 'unknown'
+    payload.logger.warn(
+      `HMAC verification failed for POST /api/posts/${id}/email-status from IP ${ip}`,
+    )
     return NextResponse.json({ error: 'Invalid signature' }, { status: 401 })
   }
 
   // Parse body
-  let body: { emailStatus?: string; emailSentAt?: string }
+  let body: { emailStatus?: string; emailSentAt?: string; tenantId?: string }
   try {
     body = JSON.parse(rawBody)
   } catch {
@@ -83,7 +85,29 @@ export async function POST(
   // Update the post using Local API with overrideAccess: true
   // This is a system-level callback -- access control is enforced by HMAC, not user context
   try {
-    const payload = await getPayload({ config: configPromise })
+    // C1: Verify tenant ownership before updating
+    const post = await payload.findByID({
+      collection: 'posts',
+      id,
+      overrideAccess: true,
+    })
+
+    // If tenantId is provided in the request body, verify it matches the post's tenant
+    if (body.tenantId) {
+      const postTenantId =
+        typeof post.tenant === 'object' && post.tenant !== null
+          ? post.tenant.id
+          : post.tenant
+      if (String(postTenantId) !== String(body.tenantId)) {
+        payload.logger.warn(
+          `Tenant mismatch on email-status update: post ${id} belongs to tenant ${postTenantId}, request claims tenant ${body.tenantId}`,
+        )
+        return NextResponse.json(
+          { error: 'Post does not belong to the specified tenant' },
+          { status: 403 },
+        )
+      }
+    }
 
     const updateData: Record<string, unknown> = {
       emailStatus: body.emailStatus,
@@ -102,7 +126,10 @@ export async function POST(
 
     return NextResponse.json({ ok: true })
   } catch (err: unknown) {
-    const msg = err instanceof Error ? err.message : 'Unknown error'
-    return NextResponse.json({ error: msg }, { status: 500 })
+    // C4: Log detailed error server-side, return generic message to caller
+    payload.logger.error(
+      `email-status update failed for post ${id}: ${err instanceof Error ? err.message : String(err)}`,
+    )
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }

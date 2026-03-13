@@ -38,7 +38,7 @@ export function ClassicNav({ siteSettings }: ClassicNavProps) {
             if (isExternal) {
               return (
                 <a
-                  key={item.url}
+                  key={`${item.url}-${item.label}`}
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -50,7 +50,7 @@ export function ClassicNav({ siteSettings }: ClassicNavProps) {
             }
             return (
               <Link
-                key={item.url}
+                key={`${item.url}-${item.label}`}
                 href={item.url}
                 className="font-serif text-sm text-classic-accent hover:text-primary transition-colors"
               >

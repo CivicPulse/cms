@@ -19,7 +19,22 @@ export function ShareButtons({ url, title }: ShareButtonsProps) {
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     } catch {
-      // Fallback: ignore if clipboard API is not available
+      // Clipboard API may not be available in insecure contexts
+      // Use execCommand fallback for older browsers
+      try {
+        const textarea = document.createElement('textarea')
+        textarea.value = url
+        textarea.style.position = 'fixed'
+        textarea.style.opacity = '0'
+        document.body.appendChild(textarea)
+        textarea.select()
+        document.execCommand('copy')
+        document.body.removeChild(textarea)
+        setCopied(true)
+        setTimeout(() => setCopied(false), 2000)
+      } catch {
+        // Both methods failed — no user feedback needed for this non-critical action
+      }
     }
   }
 
